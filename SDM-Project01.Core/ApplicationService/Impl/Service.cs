@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SDM_Project01.Core.ApplicationService.Impl
 {
-    public class Service
+    public class Service: IService
     {
          
 
