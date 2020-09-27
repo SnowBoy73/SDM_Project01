@@ -12,6 +12,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SDM_Project01.Core.Entity;
 using SDM_Project01.Core;
+using SDM_Project01.Core.ApplicationService;
+using SDM_Project01.Core.ApplicationService.Impl;
+using SDM_Project01.Core.DomianService;
+using SDM_Project01.Infrastructure.Static.Data;
 
 namespace SDM_Project01.UI // start
 {
