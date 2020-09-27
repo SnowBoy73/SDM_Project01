@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDM_Project01.UI", "SDM-Pro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDM_Project01.Core", "SDM-Project01.Core\SDM_Project01.Core.csproj", "{08D7FDC8-5A9C-4365-B397-6F83190A4AB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDM_Project01.ServiceClassMockUnitTests", "SDM_Project01.ServiceClassUnitTests\SDM_Project01.ServiceClassMockUnitTests.csproj", "{0BE2B215-4B2E-4C70-AF9F-D31DF343E579}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,5 +33,9 @@ Global
 		{08D7FDC8-5A9C-4365-B397-6F83190A4AB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08D7FDC8-5A9C-4365-B397-6F83190A4AB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08D7FDC8-5A9C-4365-B397-6F83190A4AB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BE2B215-4B2E-4C70-AF9F-D31DF343E579}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BE2B215-4B2E-4C70-AF9F-D31DF343E579}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BE2B215-4B2E-4C70-AF9F-D31DF343E579}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BE2B215-4B2E-4C70-AF9F-D31DF343E579}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
