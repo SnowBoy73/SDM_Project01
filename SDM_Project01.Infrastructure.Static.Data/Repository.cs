@@ -21,6 +21,4 @@ namespace SDM_Project01.Infrastructure.Static.Data
         }
     };
 
-
-    }
 }
