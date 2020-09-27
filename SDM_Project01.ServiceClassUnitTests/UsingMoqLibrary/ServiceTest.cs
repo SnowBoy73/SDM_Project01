@@ -37,9 +37,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
 
             Service service = new Service(mock.Object);
-            int actualResult = service.GetNumberOfReviewsFromReviewer(1);
+            int actualResult = service.GetNumberOfReviewsFromReviewer(2);
             mock.Verify(mock => mock.GetAllReviews(), Times.Once);
-            Assert.IsTrue(actualResult == 1); // ???
+            Assert.IsTrue(actualResult == 2); // ???
            // Assert.IsTrue(actualResult == returnValue[1]);  //???
         }
 
