@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using SDM_Project01.Core.DomianService;
 
 namespace SDM_Project01.Core.ApplicationService.Impl
 {
     public class Service: IService
     {
-         
+        IRepository _repo;
+        public Service(IRepository repo)
+        {
+            _repo = repo;
+        }
+
+
 
         public int GetNumberOfReviewsFromReviewer(int reviewer)
         {
@@ -34,6 +41,11 @@ namespace SDM_Project01.Core.ApplicationService.Impl
         {
             return 0;
 
+        }
+
+        public void GetNumberOfReviewsFromReviewer(object reviewer)
+        {
+            throw new NotImplementedException();
         }
 
         public int GetNumberOfRates(int movie, int rate)
