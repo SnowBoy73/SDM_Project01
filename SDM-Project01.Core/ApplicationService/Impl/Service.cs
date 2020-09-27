@@ -6,7 +6,7 @@ using SDM_Project01.Core.Entity;
 
 namespace SDM_Project01.Core.ApplicationService.Impl
 {
-    public class Service: IService
+    public class Service
     {
         IRepository _repo;
         public Service(IRepository repo)
