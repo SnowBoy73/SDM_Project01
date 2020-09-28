@@ -90,7 +90,19 @@ namespace SDM_Project01.Core.ApplicationService.Impl
 
         public int GetNumberOfReviews(int movie)
         {
-            return 0;
+
+            List<Review> result = new List<Review>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+
+            foreach (Review r in reviews)
+            {
+                if (r.AssociatedMovieId == movie)
+                {
+                    result.Add(r);
+
+                }
+            }
+            return result.Count;
         }
 
 

@@ -25,7 +25,7 @@ namespace SDM_Project01.ServiceClassMockUnitTests
                                                  ReviewerId = 1 },
 
                                     new Review  {ReviewId = 3,
-                                                 AssociatedMovieId = 2,
+                                                 AssociatedMovieId = 1,
                                                  Rating = 2,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
                                                  ReviewerId = 1 },
@@ -37,7 +37,7 @@ namespace SDM_Project01.ServiceClassMockUnitTests
                                                  ReviewerId = 2 },
 
                                     new Review  {ReviewId = 5,
-                                                 AssociatedMovieId = 2,
+                                                 AssociatedMovieId = 4,
                                                  Rating = 2,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
                                                  ReviewerId = 2 },
@@ -49,13 +49,13 @@ namespace SDM_Project01.ServiceClassMockUnitTests
                                                  ReviewerId = 3 },
 
                                     new Review  {ReviewId = 7,
-                                                 AssociatedMovieId = 2,
+                                                 AssociatedMovieId = 3,
                                                  Rating = 2,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
                                                  ReviewerId = 3 },
 
                                     new Review  {ReviewId = 8,
-                                                 AssociatedMovieId = 2,
+                                                 AssociatedMovieId = 1,
                                                  Rating = 2,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
                                                  ReviewerId = 4 },
@@ -67,7 +67,7 @@ namespace SDM_Project01.ServiceClassMockUnitTests
                                                  ReviewerId = 4 },
 
                                     new Review  {ReviewId = 10,
-                                                 AssociatedMovieId = 2,
+                                                 AssociatedMovieId = 4,
                                                  Rating = 2,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
                                                  ReviewerId = 4 },
@@ -146,6 +146,24 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsTrue(actualResult == 1, "1");
             Assert.IsFalse(actualResult == 22, "false");
             
+        }
+        [TestMethod]
+        public void TestGetNumberOfReviews()
+        {
+            Mock<IRepository> mock = new Mock<IRepository>();
+            //
+
+
+            // Setup up the mock
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
+
+            Service service = new Service(mock.Object);
+            int actualResult = service.GetNumberOfReviews(1);
+
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once);
+
+            Assert.IsTrue(actualResult == 3, "1");
+            Assert.IsFalse(actualResult == 22, "false");
         }
 
     }
