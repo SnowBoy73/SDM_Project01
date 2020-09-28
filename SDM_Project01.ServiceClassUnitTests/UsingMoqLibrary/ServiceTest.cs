@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SDM_Project01.Core.ApplicationService;
@@ -38,7 +39,7 @@ namespace SDM_Project01.ServiceClassMockUnitTests
 
                                     new Review  {ReviewId = 5,
                                                  AssociatedMovieId = 4,
-                                                 Rating = 2,
+                                                 Rating = 5,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
                                                  ReviewerId = 2 },
 
@@ -62,13 +63,13 @@ namespace SDM_Project01.ServiceClassMockUnitTests
 
                                     new Review  {ReviewId = 9,
                                                  AssociatedMovieId = 2,
-                                                 Rating = 2,
+                                                 Rating = 5,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
                                                  ReviewerId = 4 },
 
                                     new Review  {ReviewId = 10,
                                                  AssociatedMovieId = 4,
-                                                 Rating = 2,
+                                                 Rating = 5,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
                                                  ReviewerId = 4 },
 
@@ -204,6 +205,36 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfRates(1, 6));
 
             // IM BACK :D On mute while i eat some food
+        }
+        [TestMethod]
+        public void TestGetMoviesWithHighestNumberOfTopRates()
+        {
+            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IRepository> mock2 = new Mock<IRepository>();
+            //
+
+            Review[] returnValue2 = {new Review  {ReviewId = 1,
+                                                 AssociatedMovieId = 1,
+                                                 Rating = 4,
+                                                 ReviewDate = DateTime.Now.AddDays(-20),
+                                                 ReviewerId = 1 } 
+            };
+
+            // Setup up the mock
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
+            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
+
+            Service service = new Service(mock.Object);
+            Service service2 = new Service(mock2.Object);
+            List<int> actualResult = service.GetMoviesWithHighestNumberOfTopRates();
+
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
+           
+            List<int> x = new List<int>() { 4, 2, 4 };
+
+            Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
+            Assert.IsFalse(actualResult.Equals(22), "false");
+            Assert.ThrowsException<ArgumentException>(() => service2.GetMoviesWithHighestNumberOfTopRates());
         }
     }
 }

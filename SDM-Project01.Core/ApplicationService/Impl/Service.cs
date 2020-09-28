@@ -161,7 +161,22 @@ namespace SDM_Project01.Core.ApplicationService.Impl
 
         public List<int> GetMoviesWithHighestNumberOfTopRates()
         {
-            return null;
+            var intlist = new List<int>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+            
+            foreach (Review r in reviews)
+            {
+                if (r.Rating == 5)
+                {
+                    intlist.Add(r.AssociatedMovieId);
+
+                }
+            }
+            if (intlist.Count == 0)
+            {
+                throw new ArgumentException("no movie with rate of 5 found");
+            }
+            return intlist;
         }
 
 
