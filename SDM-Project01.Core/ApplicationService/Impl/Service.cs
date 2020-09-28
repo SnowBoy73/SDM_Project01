@@ -73,7 +73,18 @@ namespace SDM_Project01.Core.ApplicationService.Impl
 
         public int GetNumberOfRatesByReviewer(int reviewer, int rate)
         {
-            return 0;
+            List<Review> result = new List<Review>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+
+            foreach (Review r in reviews)
+            {
+                if (r.ReviewerId == reviewer && r.Rating == rate)
+                {
+                    result.Add(r);
+
+                }
+            }
+                return result.Count;
         }
 
 

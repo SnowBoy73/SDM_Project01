@@ -128,6 +128,25 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfReviewsFromReviewer(200));
 
         }
+        [TestMethod]
+        public void TestGetNumberOfRatesByReviewer() 
+        {
+            Mock<IRepository> mock = new Mock<IRepository>();
+            //
+
+
+            // Setup up the mock
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
+
+            Service service = new Service(mock.Object);
+            int actualResult = service.GetNumberOfRatesByReviewer(1,4);
+
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once);
+
+            Assert.IsTrue(actualResult == 1, "1");
+            Assert.IsFalse(actualResult == 22, "false");
+            
+        }
 
     }
 }
