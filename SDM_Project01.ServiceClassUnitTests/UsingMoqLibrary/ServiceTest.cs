@@ -92,6 +92,7 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             int actualResult = service.GetNumberOfReviewsFromReviewer(2);
             mock.Verify(mock => mock.GetAllReviews(), Times.Once);
             Assert.IsTrue(actualResult == 2);
+
            // Assert.IsTrue(actualResult == returnValue[1]);  //???
         }
 
