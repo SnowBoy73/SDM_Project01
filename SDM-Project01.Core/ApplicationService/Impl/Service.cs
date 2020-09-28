@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using SDM_Project01.Core.DomianService;
@@ -137,15 +138,24 @@ namespace SDM_Project01.Core.ApplicationService.Impl
         }
 
 
-        public void GetNumberOfReviewsFromReviewer(object reviewer)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public int GetNumberOfRates(int movie, int rate)
         {
-            return 0;
+            List<Review> result = new List<Review>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+            if(rate < 1 || rate > 5)
+            {
+                throw new ArgumentException("rate need to be a numbur between 1-5");
+            }
+            foreach (Review r in reviews)
+            {
+                if (r.AssociatedMovieId == movie && r.Rating == rate)
+                {
+                    result.Add(r);
+
+                }
+            }
+            return result.Count;
+            
         }
 
 
