@@ -204,7 +204,7 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsFalse(actualResult == 22, "false");
             Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfRates(1, 6));
 
-            // IM BACK :D On mute while i eat some food
+            
         }
         [TestMethod]
         public void TestGetMoviesWithHighestNumberOfTopRates()
@@ -235,6 +235,28 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
             Assert.IsFalse(actualResult.Equals(22), "false");
             Assert.ThrowsException<ArgumentException>(() => service2.GetMoviesWithHighestNumberOfTopRates());
+        }
+
+        [TestMethod]
+        public void TestGetMostProductiveReviewers()
+        {
+            Mock<IRepository> mock = new Mock<IRepository>();
+            //
+
+
+            // Setup up the mock
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
+
+            Service service = new Service(mock.Object);
+            List<int> actualResult = service.GetMostProductiveReviewers();
+
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
+
+            List<int> x = new List<int>() { 1, 4,};
+
+            Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
+            Assert.IsFalse(actualResult.Equals(22), "false");
+            //Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfRates(1, 6));
         }
     }
 }

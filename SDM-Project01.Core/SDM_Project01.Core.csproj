@@ -12,6 +12,9 @@
     <Folder Include="ApplicationService\Impl\" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="System.Collections" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SDM-Project01.Core.Entity\SDM_Project01.Core.Entity.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>

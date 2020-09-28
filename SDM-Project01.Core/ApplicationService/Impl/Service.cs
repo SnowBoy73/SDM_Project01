@@ -5,6 +5,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using SDM_Project01.Core.DomianService;
 using SDM_Project01.Core.Entity;
+using System.Collections;
+using Microsoft.AspNetCore.Http.Features;
+using System.Collections.Specialized;
 
 namespace SDM_Project01.Core.ApplicationService.Impl
 {
@@ -182,8 +185,66 @@ namespace SDM_Project01.Core.ApplicationService.Impl
 
         public List<int> GetMostProductiveReviewers()
         {
-            return null;
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            var intlist = new List<int>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+
+            foreach (Review r in reviews)
+            {
+                int rid = r.ReviewerId;
+                if (dic.Count == 0)
+                {
+                    dic.Add(rid, 1);
+                }
+                else
+                {
+                    bool isfound = false;
+                    foreach (KeyValuePair<int, int> d in dic)
+                    {
+                        if (d.Key == rid)
+                        { 
+                            
+                            var value = d.Value;
+                            value++;
+                            dic[rid] = value;
+                            isfound = true;
+                            
+                        }
+                    }
+                    if (isfound == false)
+                    {
+                        dic.Add(rid, 1);
+                    }
+                    
+                }
+                
+            }
+            var sortedDict = from entry in dic orderby entry.Value ascending select entry;
+            
+            var topId = 0;
+            var topval = 0;
+            foreach (KeyValuePair<int, int> sd in sortedDict)
+            {
+                if (intlist.Count == 0)
+                {
+                    topval = (int)sortedDict.First().Value;
+                    topId = (int)sortedDict.First().Key;
+                    intlist.Add(topId);
+                }
+                else 
+                {
+                    if(topval == sd.Value)
+                    {
+                        intlist.Add(sd.Key);
+                        break;
+                    }
+
+                }
+            }
+            return intlist;
         }
+
+        
 
 
         public List<int> GetTopRatedMovies(int amount)
