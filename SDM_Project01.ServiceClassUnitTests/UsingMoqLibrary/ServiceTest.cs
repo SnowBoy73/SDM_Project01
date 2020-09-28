@@ -56,7 +56,7 @@ namespace SDM_Project01.ServiceClassMockUnitTests
 
                                     new Review  {ReviewId = 8,
                                                  AssociatedMovieId = 1,
-                                                 Rating = 2,
+                                                 Rating = 4,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
                                                  ReviewerId = 4 },
 
@@ -125,7 +125,7 @@ namespace SDM_Project01.ServiceClassMockUnitTests
 
             Assert.IsTrue(actualResult == 2.67, "1");
             Assert.IsFalse(actualResult == 22, "false");
-            Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfReviewsFromReviewer(200));
+            Assert.ThrowsException<ArgumentException>(() => service.GetAverageRateFromReviewer(200));
 
         }
         [TestMethod]
@@ -165,6 +165,24 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsTrue(actualResult == 3, "1");
             Assert.IsFalse(actualResult == 22, "false");
         }
+        [TestMethod]
+        public void TestGetAverageRateOfMovie()
+        {
+            Mock<IRepository> mock = new Mock<IRepository>();
+            //
 
+
+            // Setup up the mock
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
+
+            Service service = new Service(mock.Object);
+            double actualResult = service.GetAverageRateOfMovie(1);
+
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
+
+            Assert.IsTrue(actualResult == 3.33, "1");
+            Assert.IsFalse(actualResult == 22, "false");
+            Assert.ThrowsException<ArgumentException>(() => service.GetAverageRateOfMovie(200));
+        }
     }
 }

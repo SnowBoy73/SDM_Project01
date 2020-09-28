@@ -108,7 +108,32 @@ namespace SDM_Project01.Core.ApplicationService.Impl
 
         public double GetAverageRateOfMovie(int movie)
         {
-            return 0;
+            double avg = 0.0;
+            var totalMovieRating = 0.0;
+
+            List<Review> result = new List<Review>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+
+
+            foreach (Review r in reviews)
+            {
+                if (r.AssociatedMovieId == movie)
+                {
+                    result.Add(r);
+                    totalMovieRating += r.Rating;
+                }
+
+            }
+            if (result.Count == 0)
+            {
+                throw new ArgumentException($"no reviews for reviewer with id {movie} were found, Average is not applicable");
+            }
+            else
+            {
+                avg = totalMovieRating / result.Count();
+                avg = Math.Round(avg, 2);
+            }
+            return avg;
         }
 
 
