@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using SDM_Project01.Core.DomianService;
 using SDM_Project01.Core.Entity;
 
@@ -19,16 +20,54 @@ namespace SDM_Project01.Core.ApplicationService.Impl
         public int GetNumberOfReviewsFromReviewer(int reviewer)
         {
             List<Review> result = new List<Review>();
-            foreach (Review r in _repo.GetAllReviews())
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+
+            foreach (Review r in reviews)
+            {
                 if (r.ReviewerId == reviewer)
+                {
                     result.Add(r);
+                }
+                
+            }
+
+            if(result.Count == 0) 
+            {
+                throw new ArgumentException($"no reviews for reviewer with id {reviewer} were found");
+                
+            }
             return result.Count();
         }
 
 
         public double GetAverageRateFromReviewer(int reviewer)
         {
-            return 0;
+            double avg = 0.0;
+            var totalRating = 0.0;
+
+            List<Review> result = new List<Review>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+            
+
+            foreach (Review r in reviews)
+            {
+                if (r.ReviewerId == reviewer)
+                {
+                    result.Add(r);
+                    totalRating += r.Rating;
+                }
+
+            }
+            if (result.Count == 0)
+            {
+                throw new ArgumentException($"no reviews for reviewer with id {reviewer} were found, Average is not applicable");
+            }
+            else 
+            {
+            avg = totalRating / result.Count();
+            avg = Math.Round(avg,2);
+            }
+            return avg;
         }
 
 

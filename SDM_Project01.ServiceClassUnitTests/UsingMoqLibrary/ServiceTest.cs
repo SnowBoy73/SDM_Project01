@@ -93,10 +93,39 @@ namespace SDM_Project01.ServiceClassMockUnitTests
 
             mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
             
-            Assert.IsTrue(actualResult == 2);
-            Assert.IsFalse(actualResult == 22, "false ues");
-            
-            
+            Assert.IsTrue(actualResult == 2,"1");
+            Assert.IsFalse(actualResult == 22, "false");
+            Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfReviewsFromReviewer(200));
+
+            int actualResult2 = service.GetNumberOfReviewsFromReviewer(1);
+            Assert.IsTrue(actualResult2 == 3,"2");
+            Assert.IsFalse(actualResult2 == 22, "false2");
+            int actualResult3 = service.GetNumberOfReviewsFromReviewer(3);
+            Assert.IsTrue(actualResult3 == 2,"3");
+            Assert.IsFalse(actualResult3 == 22, "false3");
+            int actualResult4 = service.GetNumberOfReviewsFromReviewer(4);
+            Assert.IsTrue(actualResult4 == 3,"4");
+            Assert.IsFalse(actualResult4 == 22, "false4");
+        }
+
+        [TestMethod]
+        public void TestGetAverageRateFromReviewer()
+        {
+            Mock<IRepository> mock = new Mock<IRepository>();
+            //
+
+
+            // Setup up the mock
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
+
+            Service service = new Service(mock.Object);
+            double actualResult = service.GetAverageRateFromReviewer(1);
+             
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
+
+            Assert.IsTrue(actualResult == 2.67, "1");
+            Assert.IsFalse(actualResult == 22, "false");
+            Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfReviewsFromReviewer(200));
 
         }
 
