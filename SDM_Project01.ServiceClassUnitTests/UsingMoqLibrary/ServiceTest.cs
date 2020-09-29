@@ -35,7 +35,7 @@ namespace SDM_Project01.ServiceClassMockUnitTests
                                                  AssociatedMovieId = 2,
                                                  Rating = 2,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
-                                                 ReviewerId = 2 },
+                                                 ReviewerId = 2 }, //2
 
                                     new Review  {ReviewId = 5,
                                                  AssociatedMovieId = 4,
@@ -241,22 +241,27 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetMostProductiveReviewers()
         {
             Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IRepository> mock2 = new Mock<IRepository>();
             //
-
+            Review[] returnValue2 = {
+            };
 
             // Setup up the mock
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
+            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
 
             Service service = new Service(mock.Object);
+            Service service2 = new Service(mock2.Object);
             List<int> actualResult = service.GetMostProductiveReviewers();
+
 
             mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
 
-            List<int> x = new List<int>() { 1, 4,};
+            List<int> x = new List<int>() { 1, /*3,*/ 4,};   //add 3 even nr off reviews for rewier
 
             Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
             Assert.IsFalse(actualResult.Equals(22), "false");
-            //Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfRates(1, 6));
+            Assert.ThrowsException<ArgumentException>(() => service2.GetMostProductiveReviewers());
         }
     }
 }

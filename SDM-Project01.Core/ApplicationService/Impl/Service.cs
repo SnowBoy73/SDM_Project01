@@ -199,27 +199,32 @@ namespace SDM_Project01.Core.ApplicationService.Impl
                 else
                 {
                     bool isfound = false;
-                    foreach (KeyValuePair<int, int> d in dic)
+                    for (int index = 0; index < dic.Count; index++)
                     {
-                        if (d.Key == rid)
-                        { 
-                            
-                            var value = d.Value;
-                            value++;
-                            dic[rid] = value;
+                        
+                        var item = dic.ElementAt(index);
+                        var itemKey = item.Key;
+                        var itemValue = item.Value;
+                        
+
+                        if(itemKey == rid)
+                        {
+                            itemValue++;
+                            dic[itemKey] = itemValue;
+                            // itemKey = itemValue;
                             isfound = true;
-                            
+                            break;
                         }
+                           
                     }
-                    if (isfound == false)
+                    if(isfound == false)
                     {
                         dic.Add(rid, 1);
                     }
-                    
                 }
                 
             }
-            var sortedDict = from entry in dic orderby entry.Value ascending select entry;
+            var sortedDict = from entry in dic orderby entry.Value descending select entry;
             
             var topId = 0;
             var topval = 0;
@@ -236,10 +241,14 @@ namespace SDM_Project01.Core.ApplicationService.Impl
                     if(topval == sd.Value)
                     {
                         intlist.Add(sd.Key);
-                        break;
+                        
                     }
 
                 }
+            }
+            if (intlist.Count == 0)
+            {
+                throw new ArgumentException("there is no review to be found");
             }
             return intlist;
         }
