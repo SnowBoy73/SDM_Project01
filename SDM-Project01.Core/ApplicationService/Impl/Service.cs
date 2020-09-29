@@ -258,7 +258,76 @@ namespace SDM_Project01.Core.ApplicationService.Impl
 
         public List<int> GetTopRatedMovies(int amount)
         {
-            return null;
+            Dictionary<int, double> avgDicList = new Dictionary<int, double>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+            List<int> movieIdList = new List<int>();
+
+
+            foreach (Review r in reviews)
+            {
+                int mid = r.AssociatedMovieId;
+                if (movieIdList.Count == 0)
+                {
+                    movieIdList.Add(mid);
+                }
+                else
+                {
+                    bool isfound = false;
+                    for (int index = 0; index < movieIdList.Count; index++)
+                    {
+
+                        if (movieIdList[index] == mid)
+                        {
+                            isfound = true;
+                            break;
+                        }
+
+                    }
+                    if (isfound == false)
+                    {
+                        movieIdList.Add(mid);
+                    }
+                }
+            }
+
+            foreach (var MovieId in movieIdList)
+            {
+                avgDicList[MovieId] = GetAverageRateOfMovie(MovieId);
+            }
+
+
+            List<int> topMovies = new List<int>();
+            var sortedAvgList = from entry in avgDicList orderby entry.Value descending select entry;
+
+            var topId = 0;
+            var topval = 0;
+            foreach (KeyValuePair<int, double> sal in avgDicList)
+            {
+                if (topMovies.Count == 0)
+                {
+                    topval = (int)sortedAvgList.First().Value;
+                    topId = (int)sortedAvgList.First().Key;
+                    topMovies.Add(topId);
+                }
+                else
+                {
+                    if (topval == sal.Value)
+                    {
+                        if (topId != sal.Key)
+                        {
+                            topMovies.Add(sal.Key);
+                        }
+                    }
+
+                }
+            }
+            if (topMovies.Count == 0)
+            {
+                throw new ArgumentException("there is no review to be found");
+            }
+            
+
+            return topMovies;
         }
 
 

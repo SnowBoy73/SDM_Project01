@@ -263,5 +263,31 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsFalse(actualResult.Equals(22), "false");
             Assert.ThrowsException<ArgumentException>(() => service2.GetMostProductiveReviewers());
         }
+        [TestMethod]
+        public void TestGetTopRatedMovies()
+        {
+            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IRepository> mock2 = new Mock<IRepository>();
+            //
+            Review[] returnValue2 = {
+            };
+
+            // Setup up the mock
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
+            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
+
+            Service service = new Service(mock.Object);
+            Service service2 = new Service(mock2.Object);
+            List<int> actualResult = service.GetTopRatedMovies(2);
+
+
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
+
+            List<int> x = new List<int>() { 4 };   
+
+            Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
+            Assert.IsFalse(actualResult.Equals(22), "false");
+            Assert.ThrowsException<ArgumentException>(() => service2.GetMostProductiveReviewers());
+        }
     }
 }
