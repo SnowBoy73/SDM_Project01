@@ -268,7 +268,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             var sortedAvgList = from entry in avgDicList orderby entry.Value descending select entry;
             var topId = 0;
             var topval = 0;
-            foreach (KeyValuePair<int, double> sal in avgDicList)
+            foreach (KeyValuePair<int, double> sal in sortedAvgList)
             {
                 if (topMovies.Count == 0)
                 {
@@ -298,7 +298,25 @@ namespace SDM_Project01.Core.ApplicationService.Impl
 
         public List<int> GetTopMoviesByReviewer(int reviewer)
         {
-            return null;
+            List<int> returnList = new List<int>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+           
+            List<Review> sortedReviews = reviews
+              .Where(rid => rid.ReviewerId == reviewer)
+              .OrderBy(rating => rating.Rating)
+              .ThenBy(date => date.ReviewDate)
+              .ToList();
+          
+            foreach (Review r in sortedReviews)
+            {
+                int id = r.AssociatedMovieId;
+                returnList.Add(id);
+            }
+            if (returnList.Count == 0)
+            {
+                throw new ArgumentException("there are no movies to be found");
+            }
+            return returnList;
         }
 
 
