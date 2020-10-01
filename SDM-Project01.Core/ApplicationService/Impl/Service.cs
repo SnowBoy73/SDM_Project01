@@ -303,8 +303,8 @@ namespace SDM_Project01.Core.ApplicationService.Impl
            
             List<Review> sortedReviews = reviews
               .Where(rid => rid.ReviewerId == reviewer)
-              .OrderBy(rating => rating.Rating)
-              .ThenBy(date => date.ReviewDate)
+              .OrderByDescending(rating => rating.Rating)
+              .ThenByDescending(date => date.ReviewDate)
               .ToList();
           
             foreach (Review r in sortedReviews)

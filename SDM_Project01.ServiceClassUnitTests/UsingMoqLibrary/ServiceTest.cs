@@ -281,9 +281,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Service service = new Service(mock.Object);
 
             // Verify mock1
-            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
             List<int> actualResult = service.GetTopMoviesByReviewer(1);
             List<int> x = new List<int>() { 1, 3, 2 };
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
             Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
             Assert.IsFalse(actualResult.Equals(22), "false");
 
