@@ -252,10 +252,8 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             // Setup up the mock
             Mock<IRepository> mock = new Mock<IRepository>();
             Mock<IRepository> mock2 = new Mock<IRepository>();
-            /*    Review[] returnValue2 = {
-                };  */
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue3);
+            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue3);  
             Service service = new Service(mock.Object);
             Service service2 = new Service(mock2.Object);
 
@@ -277,10 +275,8 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             // Setup up the mock
             Mock<IRepository> mock = new Mock<IRepository>();
             Mock<IRepository> mock2 = new Mock<IRepository>();
-   /*         Review[] returnValue2 = {
-            }; */
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
+            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue3);
             Service service = new Service(mock.Object);
             Service service2 = new Service(mock2.Object);
 
