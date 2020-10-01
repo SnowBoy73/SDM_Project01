@@ -249,22 +249,25 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         [TestMethod]
         public void TestGetMostProductiveReviewers()
         {
-            // Setup up the mock
+            // Setup up the mock1
             Mock<IRepository> mock = new Mock<IRepository>();
-            Mock<IRepository> mock2 = new Mock<IRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue3);  
             Service service = new Service(mock.Object);
-            Service service2 = new Service(mock2.Object);
 
             // Verify mock
             mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
-
             List<int> actualResult = service.GetMostProductiveReviewers();
             List<int> x = new List<int>() { 1, /*3,*/ 4,};   //add 3 even nr off reviews for rewier
             Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
             Assert.IsFalse(actualResult.Equals(22), "false");
+
+
+            // Setup up the mock2
+            Mock<IRepository> mock2 = new Mock<IRepository>();
+            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue3);
+            Service service2 = new Service(mock2.Object);
             Assert.ThrowsException<ArgumentException>(() => service2.GetMostProductiveReviewers());
+
         }
 
 
