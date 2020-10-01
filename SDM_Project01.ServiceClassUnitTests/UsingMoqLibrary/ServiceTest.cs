@@ -13,7 +13,8 @@ namespace SDM_Project01.ServiceClassMockUnitTests
     [TestClass]
     public class ServiceTest
     {
-        Review[] returnValue = {new Review  {ReviewId = 1,
+
+        Review[] returnValue1 = {new Review  {ReviewId = 1,
                                                  AssociatedMovieId = 1,
                                                  Rating = 4,
                                                  ReviewDate = DateTime.Now.AddDays(-20),
@@ -72,28 +73,44 @@ namespace SDM_Project01.ServiceClassMockUnitTests
                                                  Rating = 5,
                                                  ReviewDate = DateTime.Now.AddDays(-30),
                                                  ReviewerId = 4 },
-
              };
-        [TestInitialize]
+
+
+        Review[] returnValue2 = {new Review  {ReviewId = 1,
+                                                 AssociatedMovieId = 1,
+                                                 Rating = 4,
+                                                 ReviewDate = DateTime.Now.AddDays(-20),
+                                                 ReviewerId = 1 }
+            };
+
+
+        Review[] returnValue3 = {
+            };
+
+
+        Review[] returnValue4 = null;
+
+
+
+       [TestInitialize]
         public void setup()
         {
-           
-    }
+        }
+
+
+
         [TestMethod]
         public void TestGetNumberOfReviewsFromReviewer()//int reviewer)
         {
-            Mock<IRepository> mock = new Mock<IRepository>();
-            //
-          
-   
             // Setup up the mock
-            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
-
+            Mock<IRepository> mock = new Mock<IRepository>();
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
             Service service = new Service(mock.Object);
-            int actualResult = service.GetNumberOfReviewsFromReviewer(2);
 
+            // Verify mock
             mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
-            
+
+            int actualResult = service.GetNumberOfReviewsFromReviewer(2);
             Assert.IsTrue(actualResult == 2,"1");
             Assert.IsFalse(actualResult == 22, "false");
             Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfReviewsFromReviewer(200));
@@ -101,190 +118,177 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             int actualResult2 = service.GetNumberOfReviewsFromReviewer(1);
             Assert.IsTrue(actualResult2 == 3,"2");
             Assert.IsFalse(actualResult2 == 22, "false2");
+
             int actualResult3 = service.GetNumberOfReviewsFromReviewer(3);
             Assert.IsTrue(actualResult3 == 2,"3");
             Assert.IsFalse(actualResult3 == 22, "false3");
+
             int actualResult4 = service.GetNumberOfReviewsFromReviewer(4);
             Assert.IsTrue(actualResult4 == 3,"4");
             Assert.IsFalse(actualResult4 == 22, "false4");
         }
 
+
+
         [TestMethod]
         public void TestGetAverageRateFromReviewer()
         {
-            Mock<IRepository> mock = new Mock<IRepository>();
-            //
-
-
             // Setup up the mock
-            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
-
+            Mock<IRepository> mock = new Mock<IRepository>();
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
             Service service = new Service(mock.Object);
-            double actualResult = service.GetAverageRateFromReviewer(1);
-             
+
+            // Verify mock
             mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
 
+            double actualResult = service.GetAverageRateFromReviewer(1);
             Assert.IsTrue(actualResult == 2.67, "1");
             Assert.IsFalse(actualResult == 22, "false");
             Assert.ThrowsException<ArgumentException>(() => service.GetAverageRateFromReviewer(200));
-
         }
+
+
+
         [TestMethod]
         public void TestGetNumberOfRatesByReviewer() 
         {
-            Mock<IRepository> mock = new Mock<IRepository>();
-            //
-
-
             // Setup up the mock
-            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
-
+            Mock<IRepository> mock = new Mock<IRepository>();
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
             Service service = new Service(mock.Object);
-            int actualResult = service.GetNumberOfRatesByReviewer(1,4);
 
+            // Verify mock
             mock.Verify(mock => mock.GetAllReviews());//, Times.Once);
 
+            int actualResult = service.GetNumberOfRatesByReviewer(1,4);
             Assert.IsTrue(actualResult == 1, "1");
             Assert.IsFalse(actualResult == 22, "false");
-            
         }
+
+
+
         [TestMethod]
         public void TestGetNumberOfReviews()
         {
-            Mock<IRepository> mock = new Mock<IRepository>();
-            //
-
-
             // Setup up the mock
-            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
-
+            Mock<IRepository> mock = new Mock<IRepository>();
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
             Service service = new Service(mock.Object);
-            int actualResult = service.GetNumberOfReviews(1);
 
+            // Verify mock
             mock.Verify(mock => mock.GetAllReviews());//, Times.Once);
 
+            int actualResult = service.GetNumberOfReviews(1);
             Assert.IsTrue(actualResult == 3, "1");
             Assert.IsFalse(actualResult == 22, "false");
         }
+
+
+
         [TestMethod]
         public void TestGetAverageRateOfMovie()
         {
-            Mock<IRepository> mock = new Mock<IRepository>();
-            //
-
-
             // Setup up the mock
-            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
-
+            Mock<IRepository> mock = new Mock<IRepository>();
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
             Service service = new Service(mock.Object);
-            double actualResult = service.GetAverageRateOfMovie(1);
 
+            // Verify mock
             mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
 
+            double actualResult = service.GetAverageRateOfMovie(1);
             Assert.IsTrue(actualResult == 3.33, "1");
             Assert.IsFalse(actualResult == 22, "false");
             Assert.ThrowsException<ArgumentException>(() => service.GetAverageRateOfMovie(200));
         }
+
+
+
         [TestMethod]
         public void TestGetNumberOfRates()
         {
-            Mock<IRepository> mock = new Mock<IRepository>();
-            //
-
-
             // Setup up the mock
-            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
-
+            Mock<IRepository> mock = new Mock<IRepository>();
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
             Service service = new Service(mock.Object);
+
+            // Verify mock
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once);
+
             int actualResult = service.GetNumberOfRates(1,4);
-
-            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
-
             Assert.IsTrue(actualResult == 2, "1");
             Assert.IsFalse(actualResult == 22, "false");
             Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfRates(1, 6));
-
-            
         }
+
+
+
         [TestMethod]
         public void TestGetMoviesWithHighestNumberOfTopRates()
         {
+            // Setup up the mock
             Mock<IRepository> mock = new Mock<IRepository>();
             Mock<IRepository> mock2 = new Mock<IRepository>();
-            //
-
-            Review[] returnValue2 = {new Review  {ReviewId = 1,
-                                                 AssociatedMovieId = 1,
-                                                 Rating = 4,
-                                                 ReviewDate = DateTime.Now.AddDays(-20),
-                                                 ReviewerId = 1 } 
-            };
-
-            // Setup up the mock
-            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
             mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
-
             Service service = new Service(mock.Object);
             Service service2 = new Service(mock2.Object);
+
+            // Verify mock
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once);
+
             List<int> actualResult = service.GetMoviesWithHighestNumberOfTopRates();
-
-            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
-           
             List<int> x = new List<int>() { 4, 2, 4 };
-
             Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
             Assert.IsFalse(actualResult.Equals(22), "false");
             Assert.ThrowsException<ArgumentException>(() => service2.GetMoviesWithHighestNumberOfTopRates());
         }
 
+
+
         [TestMethod]
         public void TestGetMostProductiveReviewers()
         {
+            // Setup up the mock
             Mock<IRepository> mock = new Mock<IRepository>();
             Mock<IRepository> mock2 = new Mock<IRepository>();
-            //
-            Review[] returnValue2 = {
-            };
-
-            // Setup up the mock
-            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
-            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
-
+            /*    Review[] returnValue2 = {
+                };  */
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
+            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue3);
             Service service = new Service(mock.Object);
             Service service2 = new Service(mock2.Object);
-            List<int> actualResult = service.GetMostProductiveReviewers();
 
-
+            // Verify mock
             mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
 
+            List<int> actualResult = service.GetMostProductiveReviewers();
             List<int> x = new List<int>() { 1, /*3,*/ 4,};   //add 3 even nr off reviews for rewier
-
             Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
             Assert.IsFalse(actualResult.Equals(22), "false");
             Assert.ThrowsException<ArgumentException>(() => service2.GetMostProductiveReviewers());
         }
+
+
+
         [TestMethod]
         public void TestGetTopRatedMovies()
         {
+            // Setup up the mock
             Mock<IRepository> mock = new Mock<IRepository>();
             Mock<IRepository> mock2 = new Mock<IRepository>();
-            //
-            Review[] returnValue2 = {
-            };
-
-            // Setup up the mock
-            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue);
+   /*         Review[] returnValue2 = {
+            }; */
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
             mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
-
             Service service = new Service(mock.Object);
             Service service2 = new Service(mock2.Object);
-            List<int> actualResult = service.GetTopRatedMovies(2);
 
-
+            // Verify mock
             mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
 
+            List<int> actualResult = service.GetTopRatedMovies(2);
             List<int> x = new List<int>() { 4 };   
-
             Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
             Assert.IsFalse(actualResult.Equals(22), "false");
             Assert.ThrowsException<ArgumentException>(() => service2.GetMostProductiveReviewers());
