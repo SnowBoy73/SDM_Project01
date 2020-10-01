@@ -25,34 +25,28 @@ namespace SDM_Project01.Core.ApplicationService.Impl
         {
             List<Review> result = new List<Review>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
-
             foreach (Review r in reviews)
             {
                 if (r.ReviewerId == reviewer)
                 {
                     result.Add(r);
                 }
-                
             }
-
             if(result.Count == 0) 
             {
-                throw new ArgumentException($"no reviews for reviewer with id {reviewer} were found");
-                
+                throw new ArgumentException($"No reviews for reviewer with id {reviewer} were found");
             }
             return result.Count();
         }
+
 
 
         public double GetAverageRateFromReviewer(int reviewer)
         {
             double avg = 0.0;
             var totalRating = 0.0;
-
             List<Review> result = new List<Review>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
-            
-
             foreach (Review r in reviews)
             {
                 if (r.ReviewerId == reviewer)
@@ -60,65 +54,59 @@ namespace SDM_Project01.Core.ApplicationService.Impl
                     result.Add(r);
                     totalRating += r.Rating;
                 }
-
             }
             if (result.Count == 0)
             {
-                throw new ArgumentException($"no reviews for reviewer with id {reviewer} were found, Average is not applicable");
+                throw new ArgumentException($"No reviews for reviewer with id {reviewer} were found, so an average is not applicable");
             }
             else 
             {
-            avg = totalRating / result.Count();
-            avg = Math.Round(avg,2);
+                avg = totalRating / result.Count();
+                avg = Math.Round(avg,2);
             }
             return avg;
         }
+
 
 
         public int GetNumberOfRatesByReviewer(int reviewer, int rate)
         {
             List<Review> result = new List<Review>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
-
             foreach (Review r in reviews)
             {
                 if (r.ReviewerId == reviewer && r.Rating == rate)
                 {
                     result.Add(r);
-
-                }
-            }
-                return result.Count;
-        }
-
-
-        public int GetNumberOfReviews(int movie)
-        {
-
-            List<Review> result = new List<Review>();
-            List<Review> reviews = _repo.GetAllReviews().ToList();
-
-            foreach (Review r in reviews)
-            {
-                if (r.AssociatedMovieId == movie)
-                {
-                    result.Add(r);
-
                 }
             }
             return result.Count;
         }
 
 
+
+        public int GetNumberOfReviews(int movie)
+        {
+            List<Review> result = new List<Review>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
+            foreach (Review r in reviews)
+            {
+                if (r.AssociatedMovieId == movie)
+                {
+                    result.Add(r);
+                }
+            }
+            return result.Count;
+        }
+
+
+
         public double GetAverageRateOfMovie(int movie)
         {
             double avg = 0.0;
             var totalMovieRating = 0.0;
-
             List<Review> result = new List<Review>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
-
-
             foreach (Review r in reviews)
             {
                 if (r.AssociatedMovieId == movie)
@@ -126,11 +114,10 @@ namespace SDM_Project01.Core.ApplicationService.Impl
                     result.Add(r);
                     totalMovieRating += r.Rating;
                 }
-
             }
             if (result.Count == 0)
             {
-                throw new ArgumentException($"no reviews for reviewer with id {movie} were found, Average is not applicable");
+                throw new ArgumentException($"No reviews for reviewer with id {movie} were found, so an average is not applicable");
             }
             else
             {
@@ -141,46 +128,45 @@ namespace SDM_Project01.Core.ApplicationService.Impl
         }
 
 
+
         public int GetNumberOfRates(int movie, int rate)
         {
             List<Review> result = new List<Review>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
             if(rate < 1 || rate > 5)
             {
-                throw new ArgumentException("rate need to be a numbur between 1-5");
+                throw new ArgumentException("Rating needs to be a numbur between 1-5");
             }
             foreach (Review r in reviews)
             {
                 if (r.AssociatedMovieId == movie && r.Rating == rate)
                 {
                     result.Add(r);
-
                 }
             }
             return result.Count;
-            
         }
+
 
 
         public List<int> GetMoviesWithHighestNumberOfTopRates()
         {
             var intlist = new List<int>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
-            
             foreach (Review r in reviews)
             {
                 if (r.Rating == 5)
                 {
                     intlist.Add(r.AssociatedMovieId);
-
                 }
             }
             if (intlist.Count == 0)
             {
-                throw new ArgumentException("no movie with rate of 5 found");
+                throw new ArgumentException("No movie with rate of 5 found");
             }
             return intlist;
         }
+
 
 
         public List<int> GetMostProductiveReviewers()
@@ -188,7 +174,6 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             Dictionary<int, int> dic = new Dictionary<int, int>();
             var intlist = new List<int>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
-
             foreach (Review r in reviews)
             {
                 int rid = r.ReviewerId;
@@ -201,31 +186,24 @@ namespace SDM_Project01.Core.ApplicationService.Impl
                     bool isfound = false;
                     for (int index = 0; index < dic.Count; index++)
                     {
-                        
                         var item = dic.ElementAt(index);
                         var itemKey = item.Key;
                         var itemValue = item.Value;
-                        
-
-                        if(itemKey == rid)
+                        if (itemKey == rid)
                         {
                             itemValue++;
                             dic[itemKey] = itemValue;
-                            // itemKey = itemValue;
                             isfound = true;
                             break;
                         }
-                           
                     }
-                    if(isfound == false)
+                    if (isfound == false)
                     {
                         dic.Add(rid, 1);
                     }
                 }
-                
             }
             var sortedDict = from entry in dic orderby entry.Value descending select entry;
-            
             var topId = 0;
             var topval = 0;
             foreach (KeyValuePair<int, int> sd in sortedDict)
@@ -241,28 +219,23 @@ namespace SDM_Project01.Core.ApplicationService.Impl
                     if(topval == sd.Value)
                     {
                         intlist.Add(sd.Key);
-                        
                     }
-
                 }
             }
             if (intlist.Count == 0)
             {
-                throw new ArgumentException("there is no review to be found");
+                throw new ArgumentException("There is no review to be found");
             }
             return intlist;
         }
 
         
 
-
         public List<int> GetTopRatedMovies(int amount)
         {
             Dictionary<int, double> avgDicList = new Dictionary<int, double>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
             List<int> movieIdList = new List<int>();
-
-
             foreach (Review r in reviews)
             {
                 int mid = r.AssociatedMovieId;
@@ -275,13 +248,11 @@ namespace SDM_Project01.Core.ApplicationService.Impl
                     bool isfound = false;
                     for (int index = 0; index < movieIdList.Count; index++)
                     {
-
                         if (movieIdList[index] == mid)
                         {
                             isfound = true;
                             break;
                         }
-
                     }
                     if (isfound == false)
                     {
@@ -289,16 +260,12 @@ namespace SDM_Project01.Core.ApplicationService.Impl
                     }
                 }
             }
-
             foreach (var MovieId in movieIdList)
             {
                 avgDicList[MovieId] = GetAverageRateOfMovie(MovieId);
             }
-
-
             List<int> topMovies = new List<int>();
             var sortedAvgList = from entry in avgDicList orderby entry.Value descending select entry;
-
             var topId = 0;
             var topval = 0;
             foreach (KeyValuePair<int, double> sal in avgDicList)
@@ -318,23 +285,22 @@ namespace SDM_Project01.Core.ApplicationService.Impl
                             topMovies.Add(sal.Key);
                         }
                     }
-
                 }
             }
             if (topMovies.Count == 0)
             {
                 throw new ArgumentException("there is no review to be found");
             }
-            
-
             return topMovies;
         }
+
 
 
         public List<int> GetTopMoviesByReviewer(int reviewer)
         {
             return null;
         }
+
 
 
         public List<int> GetReviewersByMovie(int movie)
