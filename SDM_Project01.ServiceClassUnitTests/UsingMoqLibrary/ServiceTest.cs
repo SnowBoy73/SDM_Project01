@@ -289,5 +289,53 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsFalse(actualResult.Equals(22), "false");
             Assert.ThrowsException<ArgumentException>(() => service2.GetMostProductiveReviewers());
         }
+
+
+
+        [TestMethod]
+        public void TestGetTopMoviesByReviewer(int reviewer)
+        {
+            // Setup up the mock
+            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IRepository> mock2 = new Mock<IRepository>();
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
+            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue3);
+            Service service = new Service(mock.Object);
+            Service service2 = new Service(mock2.Object);
+
+            // Verify mock
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
+
+            List<int> actualResult = service.GetTopRatedMovies(2);
+            List<int> x = new List<int>() { 4 };
+            Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
+            Assert.IsFalse(actualResult.Equals(22), "false");
+            Assert.ThrowsException<ArgumentException>(() => service2.GetMostProductiveReviewers());
+        }
+
+
+
+        [TestMethod]
+        public void TestGetReviewersByMovie(int movie)
+        {
+            // Setup up the mock
+            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IRepository> mock2 = new Mock<IRepository>();
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
+            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue3);
+            Service service = new Service(mock.Object);
+            Service service2 = new Service(mock2.Object);
+
+            // Verify mock
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
+
+            List<int> actualResult = service.GetTopRatedMovies(2);
+            List<int> x = new List<int>() { 4 };
+            Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
+            Assert.IsFalse(actualResult.Equals(22), "false");
+            Assert.ThrowsException<ArgumentException>(() => service2.GetMostProductiveReviewers());
+        }
+
+
     }
 }
