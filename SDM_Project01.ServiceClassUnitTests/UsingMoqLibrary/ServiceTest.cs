@@ -312,10 +312,10 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Service service2 = new Service(mock2.Object);
 
             // Verify mock
-            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
 
-            List<int> actualResult = service.GetTopRatedMovies(2);
-            List<int> x = new List<int>() { 4 };
+            List<int> actualResult = service.GetReviewersByMovie(1);
+            List<int> x = new List<int>() { 1, 4 };
+            mock.Verify(mock => mock.GetAllReviews());//, Times.Once); 
             Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult));
             Assert.IsFalse(actualResult.Equals(22), "false");
             Assert.ThrowsException<ArgumentException>(() => service2.GetReviewersByMovie(1));

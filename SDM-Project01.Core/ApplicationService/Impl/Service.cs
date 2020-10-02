@@ -153,6 +153,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
         {
             var intlist = new List<int>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
+
             foreach (Review r in reviews)
             {
                 if (r.Rating == 5)
@@ -323,8 +324,24 @@ namespace SDM_Project01.Core.ApplicationService.Impl
 
         public List<int> GetReviewersByMovie(int movie)
         {
-            return null;
-        }
+            List<int> returnList = new List<int>();
+            List<Review> reviews = _repo.GetAllReviews().ToList();
 
+            List<Review> sortedReviews = reviews
+              .Where(mid => mid.AssociatedMovieId == movie)
+              .ToList();
+
+            foreach (Review r in sortedReviews)
+            {
+                int id = r.ReviewerId;
+                returnList.Add(id);
+            }
+            if (returnList.Count == 0)
+            {
+                throw new ArgumentException("there are no reviewers to be found");
+            }
+            return returnList;
+        }
     }
+
 }
