@@ -153,7 +153,6 @@ namespace SDM_Project01.Core.ApplicationService.Impl
         {
             var intlist = new List<int>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
-
             foreach (Review r in reviews)
             {
                 if (r.Rating == 5)
@@ -165,7 +164,8 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             {
                 throw new ArgumentException("No movie with rate of 5 found");
             }
-            return intlist;
+            var topMovies = intlist.Distinct().ToList(); //Removes duplicates
+            return topMovies;
         }
 
 

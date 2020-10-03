@@ -112,7 +112,6 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsFalse(actualResult4 == 22, "IsFalse test failed for reviewer 4");
             //  Test Exception for most productive reviewers
             Assert.ThrowsException<ArgumentException>(() => service.GetNumberOfReviewsFromReviewer(200));
-
         }
 
 
@@ -171,8 +170,6 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             int actualResult4 = service.GetNumberOfRatesByReviewer(4, 5);
             Assert.IsTrue(actualResult4 == 2, "IsTrue test failedt for reviewer 4");
             Assert.IsFalse(actualResult4 == 22, "IsFalse test failed for reviewer 4");
-            //  Test Exception for number of rates from reviewer
-            Assert.ThrowsException<ArgumentException>(() => service.GetAverageRateFromReviewer(200));
         }
 
 
@@ -277,7 +274,7 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             //  Test Top Rates 1
             List<int> actualResult = service.GetMoviesWithHighestNumberOfTopRates();
             mock.Verify(mock => mock.GetAllReviews());
-            List<int> x = new List<int>() { 4, 2, 4 };  // this in not meant to repeat
+            List<int> x = new List<int>() { 4, 2 };  // this in not meant to repeat
             Assert.IsTrue(Enumerable.SequenceEqual(x, actualResult), "True test failed for top rates 1");
             Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for top rates 1");
 
@@ -393,7 +390,6 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             //  Test Exception for Reviewer 1
             Assert.ThrowsException<ArgumentException>(() => service2.GetReviewersByMovie(1));
         }
-
 
     }
 
