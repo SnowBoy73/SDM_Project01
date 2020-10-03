@@ -301,7 +301,6 @@ namespace SDM_Project01.Core.ApplicationService.Impl
         {
             List<int> returnList = new List<int>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
-           
             List<Review> sortedReviews = reviews
               .Where(rid => rid.ReviewerId == reviewer)
               .OrderByDescending(rating => rating.Rating)
@@ -326,11 +325,11 @@ namespace SDM_Project01.Core.ApplicationService.Impl
         {
             List<int> returnList = new List<int>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
-
             List<Review> sortedReviews = reviews
               .Where(mid => mid.AssociatedMovieId == movie)
+              .OrderByDescending(rating => rating.Rating)
+              .ThenByDescending(date => date.ReviewDate)
               .ToList();
-
             foreach (Review r in sortedReviews)
             {
                 int id = r.ReviewerId;
@@ -343,5 +342,6 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             return returnList;
         }
     }
+
 
 }
