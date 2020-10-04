@@ -312,6 +312,51 @@ namespace SDM_Project01.ServiceClassMockUnitTests
 
 
 
+
+        [TestMethod]
+        public void GetTopRatedMovies()
+        {
+            // Setup the mock
+            Mock<IRepository> mock = new Mock<IRepository>();
+            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
+            Service service = new Service(mock.Object);
+            //  Test top movies 1
+            List<int> actualResult = service.GetTopRatedMovies(1);
+            mock.Verify(mock => mock.GetAllReviews());
+            List<int> x1 = new List<int>() { 4 };
+            Assert.IsTrue(Enumerable.SequenceEqual(x1, actualResult), "IsTrue test failed for top rated movies");
+            Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for top rated movies");
+            //  Test top movies 2
+            List<int> actualResult2 = service.GetTopRatedMovies(3);
+            List<int> x2 = new List<int>() { 4, 1, 2 };
+            Assert.IsTrue(Enumerable.SequenceEqual(x2, actualResult2), "IsTrue test failed for top rated movies");
+            Assert.IsFalse(actualResult2.Equals(22), "IsFalse test failed for top rated movies");
+            //  Test top movies 3
+            List<int> actualResult3 = service.GetTopRatedMovies(4);
+            List<int> x3 = new List<int>() { 4, 1, 2, 3 };
+            Assert.IsTrue(Enumerable.SequenceEqual(x3, actualResult3), "IsTrue test failed for top rated movies");
+            Assert.IsFalse(actualResult3.Equals(22), "IsFalse test failed for top rated movies");
+            //  Test top movies 4
+            List<int> actualResult4 = service.GetTopRatedMovies(7);
+            List<int> x4 = new List<int>() { 4, 1, 2, 3 };
+            Assert.IsTrue(Enumerable.SequenceEqual(x4, actualResult4), "IsTrue test failed for top rated movies");
+            Assert.IsFalse(actualResult4.Equals(22), "IsFalse test failed for top rated movies");
+            //  Test top movies 5
+            List<int> actualResult5 = service.GetTopRatedMovies(0);
+            List<int> x5 = new List<int>() { };
+            Assert.IsTrue(Enumerable.SequenceEqual(x5, actualResult5), "IsTrue test failed for top rated movies");
+            Assert.IsFalse(actualResult5.Equals(22), "IsFalse test failed for top rated movies");
+
+            // Setup up the mock2
+            Mock<IRepository> mock2 = new Mock<IRepository>();
+            mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
+            Service service2 = new Service(mock2.Object);
+            //  Test Exception for Reviewer 1
+            Assert.ThrowsException<ArgumentException>(() => service2.GetTopMoviesByReviewer(2));
+        }
+
+
+
         [TestMethod]
         public void TestGetTopMoviesByReviewer()
         {
@@ -329,17 +374,17 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             List<int> actualResult2 = service.GetTopMoviesByReviewer(2);
             List<int> x2 = new List<int>() { 4, 2 };
             Assert.IsTrue(Enumerable.SequenceEqual(x2, actualResult2), "IsTrue test failed for reviewer 2");
-            Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for reviewer 2");
+            Assert.IsFalse(actualResult2.Equals(22), "IsFalse test failed for reviewer 2");
             //  Test Movies for Reviewer 3
             List<int> actualResult3 = service.GetTopMoviesByReviewer(3);
             List<int> x3 = new List<int>() { 2, 3 };
             Assert.IsTrue(Enumerable.SequenceEqual(x3, actualResult3), "IsTrue test failed for reviewer 3");
-            Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for reviewer 3");
+            Assert.IsFalse(actualResult3.Equals(22), "IsFalse test failed for reviewer 3");
             //  Test Movies for Reviewer 4
             List<int> actualResult4 = service.GetTopMoviesByReviewer(4);
             List<int> x4 = new List<int>() { 4, 2, 1 };
             Assert.IsTrue(Enumerable.SequenceEqual(x4, actualResult4), "IsTrue test failed for reviewer 4");
-            Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for reviewer 4");
+            Assert.IsFalse(actualResult4.Equals(22), "IsFalse test failed for reviewer 4");
 
             // Setup up the mock2
             Mock<IRepository> mock2 = new Mock<IRepository>();
@@ -369,19 +414,19 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             List<int> x2 = new List<int>() { 4, 3, 2, 1 };
             mock.Verify(mock => mock.GetAllReviews());
             Assert.IsTrue(Enumerable.SequenceEqual(x2, actualResult2), "IsTrue test failed for movie 2");
-            Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for movie 2");
+            Assert.IsFalse(actualResult2.Equals(22), "IsFalse test failed for movie 2");
             //  Test Movie 3
             List<int> actualResult3 = service.GetReviewersByMovie(3);
             List<int> x3 = new List<int>() { 1, 3 };
             mock.Verify(mock => mock.GetAllReviews());
             Assert.IsTrue(Enumerable.SequenceEqual(x3, actualResult3), "IsTrue test failed for movie 3");
-            Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for movie 3");
+            Assert.IsFalse(actualResult3.Equals(22), "IsFalse test failed for movie 3");
             //  Test Movie 4
             List<int> actualResult4 = service.GetReviewersByMovie(4);
             List<int> x4 = new List<int>() { 4, 2 };
             mock.Verify(mock => mock.GetAllReviews());
             Assert.IsTrue(Enumerable.SequenceEqual(x4, actualResult4), "IsTrue test failed for movie 4");
-            Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for movie 4");
+            Assert.IsFalse(actualResult4.Equals(22), "IsFalse test failed for movie 4");
 
             // Setup the mock2
             Mock<IRepository> mock2 = new Mock<IRepository>();

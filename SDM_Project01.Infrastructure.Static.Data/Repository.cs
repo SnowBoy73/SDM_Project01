@@ -7,7 +7,7 @@ namespace SDM_Project01.Infrastructure.Static.Data
 {
     public class Repository : IRepository
     {
-        List<Review> reviews;
+       List<Review> reviews;
     
        public Repository()
         {
@@ -16,9 +16,9 @@ namespace SDM_Project01.Infrastructure.Static.Data
 
 
         public IEnumerable<Review> GetAllReviews()
-            {
+        {
             return new List<Review>(reviews);
         }
-    };
+    }
 
 }

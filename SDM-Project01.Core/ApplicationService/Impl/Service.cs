@@ -267,32 +267,24 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             }
             List<int> topMovies = new List<int>();
             var sortedAvgList = from entry in avgDicList orderby entry.Value descending select entry;
-            var topId = 0;
-            var topval = 0;
             foreach (KeyValuePair<int, double> sal in sortedAvgList)
             {
-                if (topMovies.Count == 0)
-                {
-                    topval = (int)sortedAvgList.First().Value;
-                    topId = (int)sortedAvgList.First().Key;
-                    topMovies.Add(topId);
-                }
-                else
-                {
-                    if (topval == sal.Value)
-                    {
-                        if (topId != sal.Key)
-                        {
-                            topMovies.Add(sal.Key);
-                        }
-                    }
-                }
+                topMovies.Add(sal.Key);
             }
             if (topMovies.Count == 0)
             {
-                throw new ArgumentException("there is no review to be found");
+                throw new ArgumentException("there is no reviews to be found");
             }
-            return topMovies;
+            if (amount > topMovies.Count)
+            {
+                amount = topMovies.Count();
+            }
+            List<int> limitedTopMovies = new List<int>();
+            for (int i = 0; i < amount; i++)
+            {
+                limitedTopMovies.Add(topMovies[i]);
+            }
+            return limitedTopMovies;
         }
 
 

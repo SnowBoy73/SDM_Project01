@@ -6,9 +6,8 @@ namespace SDM_Project01.Core.DomianService
 {
     public interface IRepository
     {
-
         IEnumerable<Review> GetAllReviews();
-
     }
+
 }
 
