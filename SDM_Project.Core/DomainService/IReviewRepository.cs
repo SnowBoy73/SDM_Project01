@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using SDM_Project01.Core.Entity;
+using SDM_Project.Core.Entity;
 
-namespace SDM_Project01.Core.DomianService
+namespace SDM_Project.Core.DomainService
 {
-    public interface IRepository
+    public interface IReviewRepository
     {
         IEnumerable<Review> GetAllReviews();
     }

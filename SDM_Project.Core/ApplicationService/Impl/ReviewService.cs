@@ -2,22 +2,55 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
-using SDM_Project01.Core.DomianService;
-using SDM_Project01.Core.Entity;
+using SDM_Project.Core.DomainService;
+using SDM_Project.Core.Entity;
 using System.Collections;
-using Microsoft.AspNetCore.Http.Features;
 using System.Collections.Specialized;
 
-namespace SDM_Project01.Core.ApplicationService.Impl
+namespace SDM_Project.Core.ApplicationService.Impl
 {
-    public class Service : IService
+    public class ReviewService : IReviewService
     {
-        IRepository _repo;
-        public Service(IRepository repo)
+        IReviewRepository _repo;
+        public ReviewService(IReviewRepository repo)
         {
+            Console.Clear();
             _repo = repo;
         }
+
+
+   /*     public void WriteListOfReviewers(int r, int count)
+        {
+            Console.WriteLine("Reviewer = " + r + " count = " + count);
+        }
+   */
+
+
+        public List<Reviewer> GetAllReviewers()
+        {
+            Dictionary<int, Reviewer> allReviewers = new Dictionary<int, Reviewer>();
+            foreach (Review r in _repo.GetAllReviews())
+            {
+                int id = r.Reviewer;
+                if (allReviewers.ContainsKey(id) == false)
+                {
+                    Reviewer reviewer = new Reviewer();
+                    reviewer.ReviewerId = id;
+                    reviewer.ReviewersReviews = new List<Review>();
+                    reviewer.ReviewersReviews.Add(r);
+                    allReviewers.Add(id, reviewer);
+                }
+                else
+                {
+                    allReviewers[id].ReviewersReviews.Add(r);
+                }
+            }
+
+            return allReviewers.Values.ToList();
+        }
+
+        
+
 
 
 
@@ -27,7 +60,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             List<Review> reviews = _repo.GetAllReviews().ToList();
             foreach (Review r in reviews)
             {
-                if (r.ReviewerId == reviewer)
+                if (r.Reviewer == reviewer)
                 {
                     result.Add(r);
                 }
@@ -39,7 +72,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             return result.Count();
         }
 
-
+       
 
         public double GetAverageRateFromReviewer(int reviewer)
         {
@@ -49,10 +82,10 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             List<Review> reviews = _repo.GetAllReviews().ToList();
             foreach (Review r in reviews)
             {
-                if (r.ReviewerId == reviewer)
+                if (r.Reviewer == reviewer)
                 {
                     result.Add(r);
-                    totalRating += r.Rating;
+                    totalRating += r.Grade;
                 }
             }
             if (result.Count == 0)
@@ -75,7 +108,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             List<Review> reviews = _repo.GetAllReviews().ToList();
             foreach (Review r in reviews)
             {
-                if (r.ReviewerId == reviewer && r.Rating == rate)
+                if (r.Reviewer == reviewer && r.Grade == rate)
                 {
                     result.Add(r);
                 }
@@ -91,7 +124,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             List<Review> reviews = _repo.GetAllReviews().ToList();
             foreach (Review r in reviews)
             {
-                if (r.AssociatedMovieId == movie)
+                if (r.Movie == movie)
                 {
                     result.Add(r);
                 }
@@ -100,7 +133,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
         }
 
 
-
+// PERFORMANCE FAIL
         public double GetAverageRateOfMovie(int movie)
         {
             double avg = 0.0;
@@ -109,10 +142,10 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             List<Review> reviews = _repo.GetAllReviews().ToList();
             foreach (Review r in reviews)
             {
-                if (r.AssociatedMovieId == movie)
+                if (r.Movie == movie)
                 {
                     result.Add(r);
-                    totalMovieRating += r.Rating;
+                    totalMovieRating += r.Grade;
                 }
             }
             if (result.Count == 0)
@@ -139,7 +172,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             }
             foreach (Review r in reviews)
             {
-                if (r.AssociatedMovieId == movie && r.Rating == rate)
+                if (r.Movie == movie && r.Grade == rate)
                 {
                     result.Add(r);
                 }
@@ -155,9 +188,9 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             List<Review> reviews = _repo.GetAllReviews().ToList();
             foreach (Review r in reviews)
             {
-                if (r.Rating == 5)
+                if (r.Grade == 5)
                 {
-                    intlist.Add(r.AssociatedMovieId);
+                    intlist.Add(r.Movie);
                 }
             }
             if (intlist.Count == 0)
@@ -170,6 +203,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
 
 
 
+// PERFORMANCE FAIL
         public List<int> GetMostProductiveReviewers()
         {
             Dictionary<int, int> dic = new Dictionary<int, int>();
@@ -177,7 +211,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             List<Review> reviews = _repo.GetAllReviews().ToList();
             foreach (Review r in reviews)
             {
-                int rid = r.ReviewerId;
+                int rid = r.Reviewer;
                 if (dic.Count == 0)
                 {
                     dic.Add(rid, 1);
@@ -239,7 +273,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             List<int> movieIdList = new List<int>();
             foreach (Review r in reviews)
             {
-                int mid = r.AssociatedMovieId;
+                int mid = r.Movie;
                 if (movieIdList.Count == 0)
                 {
                     movieIdList.Add(mid);
@@ -294,14 +328,13 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             List<int> returnList = new List<int>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
             List<Review> sortedReviews = reviews
-              .Where(rid => rid.ReviewerId == reviewer)
-              .OrderByDescending(rating => rating.Rating)
-              .ThenByDescending(date => date.ReviewDate)
+              .Where(rid => rid.Reviewer == reviewer)
+              .OrderByDescending(rating => rating.Grade)
+              .ThenByDescending(date => date.Date)
               .ToList();
-          
             foreach (Review r in sortedReviews)
             {
-                int id = r.AssociatedMovieId;
+                int id = r.Movie;
                 returnList.Add(id);
             }
             if (returnList.Count == 0)
@@ -313,18 +346,19 @@ namespace SDM_Project01.Core.ApplicationService.Impl
 
 
 
+// PERFORMANCE FAIL
         public List<int> GetReviewersByMovie(int movie)
         {
             List<int> returnList = new List<int>();
             List<Review> reviews = _repo.GetAllReviews().ToList();
             List<Review> sortedReviews = reviews
-              .Where(mid => mid.AssociatedMovieId == movie)
-              .OrderByDescending(rating => rating.Rating)
-              .ThenByDescending(date => date.ReviewDate)
+              .Where(mid => mid.Movie == movie)
+              .OrderByDescending(rating => rating.Grade)
+              .ThenByDescending(date => date.Date)
               .ToList();
             foreach (Review r in sortedReviews)
             {
-                int id = r.ReviewerId;
+                int id = r.Reviewer;
                 returnList.Add(id);
             }
             if (returnList.Count == 0)

@@ -15,11 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SDM-Project01.Core\SDM_Project01.Core.csproj" />
-    <ProjectReference Include="..\SDM-Project01.Core.Entity\SDM_Project01.Core.Entity.csproj" />
-    <ProjectReference Include="..\SDM_Project01.Infrastructure.Static.Data\SDM_Project01.Infrastructure.Static.Data.csproj" />
+    <ProjectReference Include="..\SDM-Project02.Core.Entity\SDM_Project.Core.Entity.csproj" />
+    <ProjectReference Include="..\SDM_Project02.Infrastructure.Static.Data\SDM_Project.Infrastructure.Static.Data.csproj" />
+    <ProjectReference Include="..\SDM_Project.Core\SDM_Project.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UsingMoqLibrary\" />
+    <Folder Include="UsingJsonFile\" />
   </ItemGroup>
 </Project>

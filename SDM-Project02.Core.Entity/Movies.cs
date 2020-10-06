@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SDM_Project01.Core.Entity
+namespace SDM_Project.Core.Entity
 
 {
     public class Movies

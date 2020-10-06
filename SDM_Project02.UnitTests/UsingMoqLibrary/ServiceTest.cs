@@ -3,75 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SDM_Project01.Core.ApplicationService;
-using SDM_Project01.Core.ApplicationService.Impl;
-using SDM_Project01.Core.DomianService;
-using SDM_Project01.Core.Entity;
+using SDM_Project.Core.ApplicationService.Impl;
+using SDM_Project.Core.DomainService;
+using SDM_Project.Core.Entity;
 
-namespace SDM_Project01.ServiceClassMockUnitTests
+namespace SDM_Project.UnitTests
 {
     [TestClass]
     public class ServiceTest
     {
-        Review[] returnValue1 = {new Review  {ReviewId = 1,
-                                                 AssociatedMovieId = 1,
-                                                 Rating = 4,
-                                                 ReviewDate = DateTime.Now.AddDays(-20),
-                                                 ReviewerId = 1 },
+        Review[] returnValue1 = {new Review   { Movie = 1,
+                                                Grade = 4,
+                                                Date = DateTime.Now.AddDays(-20),
+                                                Reviewer = 1 },
 
-                                    new Review  {ReviewId = 2,
-                                                 AssociatedMovieId = 2,
-                                                 Rating = 2,
-                                                 ReviewDate = DateTime.Now.AddDays(-30),
-                                                 ReviewerId = 1 },
+                                new Review  {   Movie = 2,
+                                                Grade = 2,
+                                                Date = DateTime.Now.AddDays(-30),
+                                                Reviewer = 1 },
 
-                                    new Review  {ReviewId = 3,
-                                                 AssociatedMovieId = 3,
-                                                 Rating = 2,
-                                                 ReviewDate = DateTime.Now.AddDays(-25),
-                                                 ReviewerId = 1 },
+                                new Review  {   Movie = 3,
+                                                Grade = 2,
+                                                Date = DateTime.Now.AddDays(-25),
+                                                Reviewer = 1 },
 
-                                    new Review  {ReviewId = 4,
-                                                 AssociatedMovieId = 2,
-                                                 Rating = 2,
-                                                 ReviewDate = DateTime.Now.AddDays(-30),
-                                                 ReviewerId = 2 }, 
+                                new Review  {   Movie = 2,
+                                                Grade = 2,
+                                                Date = DateTime.Now.AddDays(-30),
+                                                Reviewer = 2 }, 
 
-                                    new Review  {ReviewId = 5,
-                                                 AssociatedMovieId = 4,
-                                                 Rating = 5,
-                                                 ReviewDate = DateTime.Now.AddDays(-30),
-                                                 ReviewerId = 2 },
+                                new Review  {   Movie = 4,
+                                                Grade = 5,
+                                                Date = DateTime.Now.AddDays(-30),
+                                                Reviewer = 2 },
 
-                                    new Review  {ReviewId = 6,
-                                                 AssociatedMovieId = 2,
-                                                 Rating = 2,
-                                                 ReviewDate = DateTime.Now.AddDays(-3),
-                                                 ReviewerId = 3 },
+                                new Review  {   Movie = 2,
+                                                Grade = 2,
+                                                Date = DateTime.Now.AddDays(-3),
+                                                Reviewer = 3 },
 
-                                    new Review  {ReviewId = 7,
-                                                 AssociatedMovieId = 3,
-                                                 Rating = 2,
-                                                 ReviewDate = DateTime.Now.AddDays(-42),
-                                                 ReviewerId = 3 },
+                                new Review  {   Movie = 3,
+                                                Grade = 2,
+                                                Date = DateTime.Now.AddDays(-42),
+                                                Reviewer = 3 },
 
-                                    new Review  {ReviewId = 8,
-                                                 AssociatedMovieId = 1,
-                                                 Rating = 4,
-                                                 ReviewDate = DateTime.Now.AddDays(-30),
-                                                 ReviewerId = 4 },
+                                new Review  {   Movie = 1,
+                                                Grade = 4,
+                                                Date = DateTime.Now.AddDays(-30),
+                                                Reviewer = 4 },
 
-                                    new Review  {ReviewId = 9,
-                                                 AssociatedMovieId = 2,
-                                                 Rating = 5,
-                                                 ReviewDate = DateTime.Now.AddDays(-30),
-                                                 ReviewerId = 4 },
+                                new Review  {   Movie = 2,
+                                                Grade = 5,
+                                                Date = DateTime.Now.AddDays(-30),
+                                                Reviewer = 4 },
 
-                                    new Review  {ReviewId = 10,
-                                                 AssociatedMovieId = 4,
-                                                 Rating = 5,
-                                                 ReviewDate = DateTime.Now.AddDays(-12),
-                                                 ReviewerId = 4 },
+                                new Review  {   Movie = 4,
+                                                Grade = 5,
+                                                Date = DateTime.Now.AddDays(-12),
+                                                Reviewer = 4 },
         };
 
 
@@ -90,9 +79,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetNumberOfReviewsFromReviewer()
         {
             //  Setup the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test Reviewer 1
             int actualResult = service.GetNumberOfReviewsFromReviewer(2);
             mock.Verify(mock => mock.GetAllReviews());
@@ -120,9 +109,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetAverageRateFromReviewer()
         {
             //  Setup the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test Reviewer 1
             double actualResult = service.GetAverageRateFromReviewer(1);
             mock.Verify(mock => mock.GetAllReviews());
@@ -150,9 +139,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetNumberOfRatesByReviewer()
         {
             //  Setup the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test Reviewer 1
             int actualResult = service.GetNumberOfRatesByReviewer(1, 4);
             mock.Verify(mock => mock.GetAllReviews());
@@ -178,9 +167,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetNumberOfReviews()
         {
             //  Setup the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test Movie 1
             int actualResult = service.GetNumberOfReviews(1);
             mock.Verify(mock => mock.GetAllReviews());
@@ -208,9 +197,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetAverageRateOfMovie()
         {
             //  Setup the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test Movie 1
             double actualResult = service.GetAverageRateOfMovie(1);
             mock.Verify(mock => mock.GetAllReviews());
@@ -238,9 +227,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetNumberOfRates()
         {
             //  Setup the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test Movie 1
             int actualResult = service.GetNumberOfRates(1, 4);
             mock.Verify(mock => mock.GetAllReviews());
@@ -268,9 +257,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetMoviesWithHighestNumberOfTopRates()
         {
             // Setup the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test Top Rates 1
             List<int> actualResult = service.GetMoviesWithHighestNumberOfTopRates();
             mock.Verify(mock => mock.GetAllReviews());
@@ -279,9 +268,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for top rates 1");
 
             // Setup the mock2
-            Mock<IRepository> mock2 = new Mock<IRepository>();
+            Mock<IReviewRepository> mock2 = new Mock<IReviewRepository>();
             mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
-            Service service2 = new Service(mock2.Object);
+            ReviewService service2 = new ReviewService(mock2.Object);
             //  Test Exception for top rates
             Assert.ThrowsException<ArgumentException>(() => service2.GetMoviesWithHighestNumberOfTopRates());
         }
@@ -292,9 +281,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetMostProductiveReviewers()
         {
             // Setup the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test Productive Reviewers 1
             List<int> actualResult = service.GetMostProductiveReviewers();
             mock.Verify(mock => mock.GetAllReviews());
@@ -303,9 +292,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for most productive reviewers");
 
             //  Setup up the mock2
-            Mock<IRepository> mock2 = new Mock<IRepository>();
+            Mock<IReviewRepository> mock2 = new Mock<IReviewRepository>();
             mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
-            Service service2 = new Service(mock2.Object);
+            ReviewService service2 = new ReviewService(mock2.Object);
             //  Test Exception for most productive reviewers
             Assert.ThrowsException<ArgumentException>(() => service2.GetMostProductiveReviewers());
         }
@@ -317,9 +306,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void GetTopRatedMovies()
         {
             // Setup the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test top movies 1
             List<int> actualResult = service.GetTopRatedMovies(1);
             mock.Verify(mock => mock.GetAllReviews());
@@ -348,9 +337,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsFalse(actualResult5.Equals(22), "IsFalse test failed for top rated movies");
 
             // Setup up the mock2
-            Mock<IRepository> mock2 = new Mock<IRepository>();
+            Mock<IReviewRepository> mock2 = new Mock<IReviewRepository>();
             mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
-            Service service2 = new Service(mock2.Object);
+            ReviewService service2 = new ReviewService(mock2.Object);
             //  Test Exception for Reviewer 1
             Assert.ThrowsException<ArgumentException>(() => service2.GetTopMoviesByReviewer(2));
         }
@@ -361,9 +350,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetTopMoviesByReviewer()
         {
             //  Setup up the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test Movies for Reviewer 1
             List<int> actualResult = service.GetTopMoviesByReviewer(1);
             List<int> x1 = new List<int>() { 1, 3, 2 };
@@ -387,9 +376,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsFalse(actualResult4.Equals(22), "IsFalse test failed for reviewer 4");
 
             // Setup up the mock2
-            Mock<IRepository> mock2 = new Mock<IRepository>();
+            Mock<IReviewRepository> mock2 = new Mock<IReviewRepository>();
             mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
-            Service service2 = new Service(mock2.Object);
+            ReviewService service2 = new ReviewService(mock2.Object);
             //  Test Exception for Reviewer 1
             Assert.ThrowsException<ArgumentException>(() => service2.GetTopMoviesByReviewer(1));
         }
@@ -400,9 +389,9 @@ namespace SDM_Project01.ServiceClassMockUnitTests
         public void TestGetReviewersByMovie()
         {
             // Setup the mock
-            Mock<IRepository> mock = new Mock<IRepository>();
+            Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
             mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
-            Service service = new Service(mock.Object);
+            ReviewService service = new ReviewService(mock.Object);
             //  Test Movie 1
             List<int> actualResult = service.GetReviewersByMovie(1);
             List<int> x1 = new List<int>() { 1, 4 };
@@ -429,13 +418,13 @@ namespace SDM_Project01.ServiceClassMockUnitTests
             Assert.IsFalse(actualResult4.Equals(22), "IsFalse test failed for movie 4");
 
             // Setup the mock2
-            Mock<IRepository> mock2 = new Mock<IRepository>();
+            Mock<IReviewRepository> mock2 = new Mock<IReviewRepository>();
             mock2.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue2);
-            Service service2 = new Service(mock2.Object);
+            ReviewService service2 = new ReviewService(mock2.Object);
             //  Test Exception for Reviewer 1
             Assert.ThrowsException<ArgumentException>(() => service2.GetReviewersByMovie(1));
         }
-
+      
     }
 
 

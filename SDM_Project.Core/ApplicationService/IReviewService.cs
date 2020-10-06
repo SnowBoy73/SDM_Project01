@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using SDM_Project01.Core.Entity;
+using SDM_Project.Core.Entity;
 
-namespace SDM_Project01.Core.ApplicationService
+namespace SDM_Project.Core.ApplicationService
 {
-    public interface IService
+    public interface IReviewService
     {
         int GetNumberOfReviewsFromReviewer(int reviewer);
 

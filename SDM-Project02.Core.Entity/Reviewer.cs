@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SDM_Project01.Core.Entity
+namespace SDM_Project.Core.Entity
 {
     public class Reviewer
     {
         public int ReviewerId { get; set; }
-        public List<Review> ReviewersReviews { get; set; }  // not used yet
+        public List<Review> ReviewersReviews { get; set; }
     }
 }

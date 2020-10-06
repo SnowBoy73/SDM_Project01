@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SDM_Project01.Core.Entity
+namespace SDM_Project.Core.Entity
 {
     public class Filter  // not used yet
     {

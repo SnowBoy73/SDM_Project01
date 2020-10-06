@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SDM-Project02.Core.Entity\SDM_Project.Core.Entity.csproj" />
+    <ProjectReference Include="..\SDM_Project02.Infrastructure.Static.Data\SDM_Project.Infrastructure.Static.Data.csproj" />
+    <ProjectReference Include="..\SDM_Project.Core\SDM_Project.Core.csproj" />
+  </ItemGroup>
+</Project>
