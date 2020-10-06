@@ -16,13 +16,13 @@ namespace SDM_Project.UI.Console
             IReviewRepository reviewRepository = new ReviewRepository();
             List<Review> allReviews = (List<Review>)reviewRepository.GetAllReviews();
             ReviewService reviewService = new ReviewService(reviewRepository);
-         //   List<Reviewer> allReviewers = reviewService.GetAllReviewers();
-         /*   for (int i = 0; i < Math.Min(allReviewers.Count, 100); i++)
+          List<Reviewer> allReviewers = reviewService.GetAllReviewers();
+            for (int i = 0; i < Math.Min(allReviewers.Count, 100); i++)
             {
                 Reviewer r = allReviewers[i];
                // reviewService.WriteListOfReviewers(r.ReviewerId, r.ReviewersReviews.Count);
                // Console.WriteLine("Reviewer = " + r.ReviewerId + " count = " + r.ReviewersReviews.Count);
-            }*/
+            }
         }
 
     }

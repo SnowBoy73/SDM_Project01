@@ -6,6 +6,7 @@ using SDM_Project.Core.DomainService;
 using SDM_Project.Core.Entity;
 using System.Collections;
 using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace SDM_Project.Core.ApplicationService.Impl
 {
@@ -14,7 +15,7 @@ namespace SDM_Project.Core.ApplicationService.Impl
         IReviewRepository _repo;
         public ReviewService(IReviewRepository repo)
         {
-            Console.Clear();
+            //Console.Clear();
             _repo = repo;
         }
 
@@ -205,66 +206,39 @@ namespace SDM_Project.Core.ApplicationService.Impl
 
 // PERFORMANCE FAIL
         public List<int> GetMostProductiveReviewers()
-        {
-            Dictionary<int, int> dic = new Dictionary<int, int>();
-            var intlist = new List<int>();
-            List<Review> reviews = _repo.GetAllReviews().ToList();
-            foreach (Review r in reviews)
+        {          
+            List<Review> allReviews = _repo.GetAllReviews().ToList();
+            var allReviewers = GetAllReviewers().ToList();
+
+            int topCount = 0;
+            var topList = new List<int>();
+            foreach (var Rev in allReviewers)
             {
-                int rid = r.Reviewer;
-                if (dic.Count == 0)
+               var revCount = Rev.ReviewersReviews.Count();
+
+                if (revCount > topCount)
                 {
-                    dic.Add(rid, 1);
+                    topList.Clear();
+                    topList.Add(Rev.ReviewerId);
+                    topCount = revCount;
+
                 }
-                else
+                if (revCount == topCount)
                 {
-                    bool isfound = false;
-                    for (int index = 0; index < dic.Count; index++)
-                    {
-                        var item = dic.ElementAt(index);
-                        var itemKey = item.Key;
-                        var itemValue = item.Value;
-                        if (itemKey == rid)
-                        {
-                            itemValue++;
-                            dic[itemKey] = itemValue;
-                            isfound = true;
-                            break;
-                        }
-                    }
-                    if (isfound == false)
-                    {
-                        dic.Add(rid, 1);
-                    }
+                    topList.Add(Rev.ReviewerId);
+                    topCount = revCount;
                 }
+
             }
-            var sortedDict = from entry in dic orderby entry.Value descending select entry;
-            var topId = 0;
-            var topval = 0;
-            foreach (KeyValuePair<int, int> sd in sortedDict)
-            {
-                if (intlist.Count == 0)
-                {
-                    topval = (int)sortedDict.First().Value;
-                    topId = (int)sortedDict.First().Key;
-                    intlist.Add(topId);
-                }
-                else 
-                {
-                    if(topval == sd.Value)
-                    {
-                        intlist.Add(sd.Key);
-                    }
-                }
-            }
-            if (intlist.Count == 0)
+            var returnList = topList.Distinct().ToList();
+            if (returnList.Count == 0)
             {
                 throw new ArgumentException("There is no review to be found");
             }
-            return intlist;
+            return returnList; 
         }
 
-        
+
 
         public List<int> GetTopRatedMovies(int amount)
         {

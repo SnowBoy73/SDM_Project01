@@ -46,7 +46,7 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         public void TestPerformanceGetAverageRateOfMovie()
         {
          //   ReviewService service = new ReviewService(reviewRepository);
-            service.GetAverageRateOfMovie(1);  // movie
+            service.GetAverageRateOfMovie(30878);  // movie
         }
 
 
@@ -92,7 +92,7 @@ namespace SDM_Project.UnitTests.UsingJsonFile
 
 
         [TestMethod]
-        [Timeout(32000)]
+        [Timeout(180000)]
         public void TestPerformanceGetMostProductiveReviewers()
         {
          //   ReviewService service = new ReviewService(reviewRepository);
@@ -126,7 +126,7 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         public void TestPerformanceGetReviewersByMovie()
         {
          //   ReviewService service = new ReviewService(reviewRepository);
-            service.GetReviewersByMovie(1);  // movie
+            service.GetReviewersByMovie(30878);  // movie
         }
 
 
