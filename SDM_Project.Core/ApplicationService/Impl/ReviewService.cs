@@ -12,20 +12,33 @@ namespace SDM_Project.Core.ApplicationService.Impl
 {
     public class ReviewService : IReviewService
     {
+        static List<Movies> allMovies = new List<Movies>();
         IReviewRepository _repo;
         public ReviewService(IReviewRepository repo)
         {
             //Console.Clear();
             _repo = repo;
+
+            //allMovies = new List<Movies>();
+
         }
 
 
-   /*     public void WriteListOfReviewers(int r, int count)
+        
+        public List<Movies> getAllMovies()
         {
-            Console.WriteLine("Reviewer = " + r + " count = " + count);
-        }
-   */
+            List<Review> allReviews = _repo.GetAllReviews().ToList();
 
+            
+            foreach (var rev in allReviews)
+            {
+                var AvgRating = GetAverageRateOfMovie(rev.Movie);
+                allMovies.Add(new Movies { MovieId = rev.Movie, AvgRating = AvgRating });
+
+            }
+            Console.WriteLine(allMovies.Count);
+            return allMovies;
+        }
 
         public List<Reviewer> GetAllReviewers()
         {
@@ -134,7 +147,7 @@ namespace SDM_Project.Core.ApplicationService.Impl
         }
 
 
-// PERFORMANCE FAIL
+
         public double GetAverageRateOfMovie(int movie)
         {
             double avg = 0.0;
@@ -204,7 +217,7 @@ namespace SDM_Project.Core.ApplicationService.Impl
 
 
 
-// PERFORMANCE FAIL
+
         public List<int> GetMostProductiveReviewers()
         {          
             List<Review> allReviews = _repo.GetAllReviews().ToList();
@@ -242,57 +255,35 @@ namespace SDM_Project.Core.ApplicationService.Impl
 
         public List<int> GetTopRatedMovies(int amount)
         {
-            Dictionary<int, double> avgDicList = new Dictionary<int, double>();
-            List<Review> reviews = _repo.GetAllReviews().ToList();
-            List<int> movieIdList = new List<int>();
-            foreach (Review r in reviews)
+            if(allMovies.Count == 0)
             {
-                int mid = r.Movie;
-                if (movieIdList.Count == 0)
-                {
-                    movieIdList.Add(mid);
-                }
-                else
-                {
-                    bool isfound = false;
-                    for (int index = 0; index < movieIdList.Count; index++)
-                    {
-                        if (movieIdList[index] == mid)
-                        {
-                            isfound = true;
-                            break;
-                        }
-                    }
-                    if (isfound == false)
-                    {
-                        movieIdList.Add(mid);
-                    }
-                }
+                getAllMovies();
             }
-            foreach (var MovieId in movieIdList)
-            {
-                avgDicList[MovieId] = GetAverageRateOfMovie(MovieId);
-            }
-            List<int> topMovies = new List<int>();
-            var sortedAvgList = from entry in avgDicList orderby entry.Value descending select entry;
-            foreach (KeyValuePair<int, double> sal in sortedAvgList)
-            {
-                topMovies.Add(sal.Key);
-            }
-            if (topMovies.Count == 0)
+            var dAllMovies = allMovies.Distinct().ToList();
+            List<Movies> sortedMovies = dAllMovies
+              .OrderByDescending(AvgRating => AvgRating.AvgRating)
+              .ToList();
+            
+             
+
+            if (sortedMovies.Count == 0)
             {
                 throw new ArgumentException("there is no reviews to be found");
             }
-            if (amount > topMovies.Count)
+            if (amount > sortedMovies.Count)
             {
-                amount = topMovies.Count();
+                amount = sortedMovies.Count();
             }
             List<int> limitedTopMovies = new List<int>();
+            List<int> dlimitedTopMovies = limitedTopMovies.Distinct().ToList();
             for (int i = 0; i < amount; i++)
             {
-                limitedTopMovies.Add(topMovies[i]);
+                int mid = sortedMovies[i].MovieId;
+                limitedTopMovies.Add(mid);
             }
-            return limitedTopMovies;
+            
+
+            return dlimitedTopMovies;
         }
 
 
@@ -320,7 +311,7 @@ namespace SDM_Project.Core.ApplicationService.Impl
 
 
 
-// PERFORMANCE FAIL
+
         public List<int> GetReviewersByMovie(int movie)
         {
             List<int> returnList = new List<int>();
