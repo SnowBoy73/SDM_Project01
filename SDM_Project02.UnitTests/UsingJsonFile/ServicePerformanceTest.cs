@@ -95,7 +95,7 @@ namespace SDM_Project.UnitTests.UsingJsonFile
 
 
         [TestMethod]
-        [Timeout(180000)]
+        [Timeout(4000)]
         public void TestPerformanceGetTopRatedMovies()
         {
             service.GetTopRatedMovies(10);  // returns the given number of top movies
