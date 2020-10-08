@@ -63,6 +63,47 @@ namespace SDM_Project.UnitTests
                                                 Reviewer = 4 },
         };
 
+        Movies[] returnValueM1 = {new Movies   { MovieId = 1,
+                                                AvgRating = 1.85,
+                                                },
+
+                                new Movies   { MovieId = 2,
+                                                AvgRating = 2.57,
+                                                },
+
+                                new Movies   { MovieId = 3,
+                                                AvgRating = 4.5,
+                                                },
+
+                                new Movies   { MovieId = 4,
+                                                AvgRating = 3.52,
+                                                },
+
+                                new Movies   { MovieId = 5,
+                                                AvgRating = 1.69,
+                                                },
+
+                                new Movies   { MovieId = 6,
+                                                AvgRating = 4.21,
+                                                },
+
+                                new Movies   { MovieId = 7,
+                                                AvgRating = 4.20,
+                                                },
+
+                                new Movies   { MovieId = 8,
+                                                AvgRating = 1.13,
+                                                },
+
+                                new Movies   { MovieId = 9,
+                                                AvgRating = 3.58,
+                                                },
+
+                                new Movies   { MovieId = 10,
+                                                AvgRating = 3.69,
+                                                },
+
+        };
 
         Review[] returnValue2 = { };
 
@@ -307,27 +348,27 @@ namespace SDM_Project.UnitTests
         {
             // Setup the mock
             Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
-            mock.Setup(mock => mock.GetAllReviews()).Returns(() => returnValue1);
+            mock.Setup(mock => mock.getAllMovies()).Returns(() => returnValueM1); ;
             ReviewService service = new ReviewService(mock.Object);
             //  Test top movies 1
             List<int> actualResult = service.GetTopRatedMovies(1);
-            mock.Verify(mock => mock.GetAllReviews());
-            List<int> x1 = new List<int>() { 4 };
+            mock.Verify(mock => mock.getAllMovies());
+            List<int> x1 = new List<int>() { 3 };
             Assert.IsTrue(Enumerable.SequenceEqual(x1, actualResult), "IsTrue test failed for top rated movies");
             Assert.IsFalse(actualResult.Equals(22), "IsFalse test failed for top rated movies");
             //  Test top movies 2
             List<int> actualResult2 = service.GetTopRatedMovies(3);
-            List<int> x2 = new List<int>() { 4, 1, 2 };
+            List<int> x2 = new List<int>() { 3, 6, 7 };
             Assert.IsTrue(Enumerable.SequenceEqual(x2, actualResult2), "IsTrue test failed for top rated movies");
             Assert.IsFalse(actualResult2.Equals(22), "IsFalse test failed for top rated movies");
             //  Test top movies 3
             List<int> actualResult3 = service.GetTopRatedMovies(4);
-            List<int> x3 = new List<int>() { 4, 1, 2, 3 };
+            List<int> x3 = new List<int>() { 3, 6, 7, 10 };
             Assert.IsTrue(Enumerable.SequenceEqual(x3, actualResult3), "IsTrue test failed for top rated movies");
             Assert.IsFalse(actualResult3.Equals(22), "IsFalse test failed for top rated movies");
             //  Test top movies 4
             List<int> actualResult4 = service.GetTopRatedMovies(7);
-            List<int> x4 = new List<int>() { 4, 1, 2, 3 };
+            List<int> x4 = new List<int>() { 3, 6, 7, 10, 9, 4, 2 };
             Assert.IsTrue(Enumerable.SequenceEqual(x4, actualResult4), "IsTrue test failed for top rated movies");
             Assert.IsFalse(actualResult4.Equals(22), "IsFalse test failed for top rated movies");
             //  Test top movies 5

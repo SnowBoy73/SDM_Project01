@@ -8,5 +8,6 @@ namespace SDM_Project.Core.Entity
         public int Grade { get; set; }
         public DateTime Date { get; set; }
         public int Reviewer { get; set; }
+        //public Movies Movies { get; set; }
     }
 }

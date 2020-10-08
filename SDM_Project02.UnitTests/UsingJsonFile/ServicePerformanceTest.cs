@@ -106,7 +106,7 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         public void TestPerformanceGetTopRatedMovies()
         {
          //   ReviewService service = new ReviewService(reviewRepository);
-            service.GetTopRatedMovies(100);  // returns the given number of top movies
+            service.GetTopRatedMovies(10);  // returns the given number of top movies
         }
 
 

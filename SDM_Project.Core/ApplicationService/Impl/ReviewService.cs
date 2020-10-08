@@ -7,38 +7,55 @@ using SDM_Project.Core.Entity;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using Microsoft.Win32.SafeHandles;
 
 namespace SDM_Project.Core.ApplicationService.Impl
 {
     public class ReviewService : IReviewService
     {
-        static List<Movies> allMovies = new List<Movies>();
+        
         IReviewRepository _repo;
+
         public ReviewService(IReviewRepository repo)
         {
             //Console.Clear();
             _repo = repo;
 
-            //allMovies = new List<Movies>();
-
+            
         }
 
-
-        
-        public List<Movies> getAllMovies()
+       /* public ReviewService()
         {
             List<Review> allReviews = _repo.GetAllReviews().ToList();
+            this.allMovies = new List<Movies>();
 
-            
             foreach (var rev in allReviews)
             {
                 var AvgRating = GetAverageRateOfMovie(rev.Movie);
-                allMovies.Add(new Movies { MovieId = rev.Movie, AvgRating = AvgRating });
+                this.allMovies.Add(new Movies { MovieId = rev.Movie, AvgRating = AvgRating });
 
             }
+        }*/
+
+
+       /* public List<Movies> getAllMovies()
+        {
+            List<Review> allReviews = _repo.GetAllReviews().ToList();
+            List<Movies> allMoviesnon = new List<Movies>();
+
+            foreach (var rev in allReviews)
+            {
+                var AvgRating = GetAverageRateOfMovie(rev.Movie);
+                allMoviesnon.Add(new Movies { MovieId = rev.Movie, AvgRating = AvgRating });
+
+            }
+            
+            Console.WriteLine(allMoviesnon.Count);
+            var allMovies = allMoviesnon.Distinct().ToList();
             Console.WriteLine(allMovies.Count);
+            
             return allMovies;
-        }
+        }*/
 
         public List<Reviewer> GetAllReviewers()
         {
@@ -255,16 +272,27 @@ namespace SDM_Project.Core.ApplicationService.Impl
 
         public List<int> GetTopRatedMovies(int amount)
         {
-            if(allMovies.Count == 0)
-            {
-                getAllMovies();
-            }
-            var dAllMovies = allMovies.Distinct().ToList();
-            List<Movies> sortedMovies = dAllMovies
+
+            List<Movies> allMovies =_repo.getAllMovies().ToList();
+            
+            List<Movies> sortedMovies = allMovies
               .OrderByDescending(AvgRating => AvgRating.AvgRating)
               .ToList();
-            
-             
+
+            /*List<Movies> deList = new List<Movies>();
+            List<int> deListId = new List<int>();
+            foreach (var movie in sortedMovies)
+            {
+                if (deListId.Contains(movie.MovieId))
+                {
+
+                }
+                else
+                {
+                    deList.Add(movie);
+                    deListId.Add(movie.MovieId);
+                }
+            }*/
 
             if (sortedMovies.Count == 0)
             {
@@ -275,13 +303,17 @@ namespace SDM_Project.Core.ApplicationService.Impl
                 amount = sortedMovies.Count();
             }
             List<int> limitedTopMovies = new List<int>();
-            List<int> dlimitedTopMovies = limitedTopMovies.Distinct().ToList();
+            if(amount > sortedMovies.Count)
+            {
+                amount = sortedMovies.Count;
+            }
+
             for (int i = 0; i < amount; i++)
             {
                 int mid = sortedMovies[i].MovieId;
                 limitedTopMovies.Add(mid);
             }
-            
+            List<int> dlimitedTopMovies = limitedTopMovies.Distinct().ToList();
 
             return dlimitedTopMovies;
         }

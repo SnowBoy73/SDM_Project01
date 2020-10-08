@@ -7,6 +7,8 @@ namespace SDM_Project.Core.DomainService
     public interface IReviewRepository
     {
         IEnumerable<Review> GetAllReviews();
+
+        IEnumerable<Movies> getAllMovies();
     }
 
 }
