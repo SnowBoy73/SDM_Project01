@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SDM_Project.Core.DomainService;
 using SDM_Project.Core.ApplicationService.Impl;
 using SDM_Project.Infrastructure.Static.Data;
+
 namespace SDM_Project.UnitTests.UsingJsonFile
 {
 
@@ -25,7 +26,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(4000)]
         public void TestPerformanceGetAllReviewers()
         {
-          //  ReviewService service = new ReviewService(reviewRepository);
             service.GetAllReviewers();  // list all reviewers
         }
 
@@ -35,7 +35,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(4000)]
         public void TestPerformanceGetNumberOfReviewsFromReviewer()
         {
-         //   ReviewService service = new ReviewService(reviewRepository);
             service.GetNumberOfReviewsFromReviewer(1);  // reviewer
         }
 
@@ -45,7 +44,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(4000)]
         public void TestPerformanceGetAverageRateOfMovie()
         {
-         //   ReviewService service = new ReviewService(reviewRepository);
             service.GetAverageRateOfMovie(30878);  // movie
         }
 
@@ -55,7 +53,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(4000)]
         public void TestPerformanceGetNumberOfRatesByReviewerr()
         {
-         //   ReviewService service = new ReviewService(reviewRepository);
             service.GetNumberOfRatesByReviewer(1,5);  // reviewer, rating
         }
 
@@ -65,7 +62,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(4000)]
         public void TestPerformanceGetNumberOfReviews()
         {
-         //   ReviewService service = new ReviewService(reviewRepository);
             service.GetNumberOfReviews(1141189);  // movie
         }
 
@@ -75,7 +71,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(4000)]
         public void TestPerformanceGetNumberOfRates()
         {
-         //   ReviewService service = new ReviewService(reviewRepository);
             service.GetNumberOfRates(493945, 2);  // movie, rating
         }
 
@@ -85,7 +80,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(4000)]
         public void TestPerformanceGetMoviesWithHighestNumberOfTopRates()
         {
-         //   ReviewService service = new ReviewService(reviewRepository);
             service.GetMoviesWithHighestNumberOfTopRates();  // all movies with a rating of 5
         }
 
@@ -95,7 +89,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(4000)]
         public void TestPerformanceGetMostProductiveReviewers()
         {
-         //   ReviewService service = new ReviewService(reviewRepository);
             service.GetMostProductiveReviewers();  // list of most prductive reviewerers ids
         }
 
@@ -105,7 +98,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(180000)]
         public void TestPerformanceGetTopRatedMovies()
         {
-         //   ReviewService service = new ReviewService(reviewRepository);
             service.GetTopRatedMovies(10);  // returns the given number of top movies
         }
 
@@ -115,7 +107,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(4000)]
         public void TestPerformanceGetTopMoviesByReviewer()
         {
-         //   ReviewService service = new ReviewService(reviewRepository);
             service.GetTopMoviesByReviewer(1);  // reviewer
         }
 
@@ -125,7 +116,6 @@ namespace SDM_Project.UnitTests.UsingJsonFile
         [Timeout(4000)]
         public void TestPerformanceGetReviewersByMovie()
         {
-         //   ReviewService service = new ReviewService(reviewRepository);
             service.GetReviewersByMovie(30878);  // movie
         }
 

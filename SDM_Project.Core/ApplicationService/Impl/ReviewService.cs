@@ -4,10 +4,6 @@ using System.Data;
 using System.Linq;
 using SDM_Project.Core.DomainService;
 using SDM_Project.Core.Entity;
-using System.Collections;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using Microsoft.Win32.SafeHandles;
 
 namespace SDM_Project.Core.ApplicationService.Impl
 {
@@ -18,44 +14,10 @@ namespace SDM_Project.Core.ApplicationService.Impl
 
         public ReviewService(IReviewRepository repo)
         {
-            //Console.Clear();
             _repo = repo;
-
-            
         }
 
-       /* public ReviewService()
-        {
-            List<Review> allReviews = _repo.GetAllReviews().ToList();
-            this.allMovies = new List<Movies>();
-
-            foreach (var rev in allReviews)
-            {
-                var AvgRating = GetAverageRateOfMovie(rev.Movie);
-                this.allMovies.Add(new Movies { MovieId = rev.Movie, AvgRating = AvgRating });
-
-            }
-        }*/
-
-
-       /* public List<Movies> getAllMovies()
-        {
-            List<Review> allReviews = _repo.GetAllReviews().ToList();
-            List<Movies> allMoviesnon = new List<Movies>();
-
-            foreach (var rev in allReviews)
-            {
-                var AvgRating = GetAverageRateOfMovie(rev.Movie);
-                allMoviesnon.Add(new Movies { MovieId = rev.Movie, AvgRating = AvgRating });
-
-            }
-            
-            Console.WriteLine(allMoviesnon.Count);
-            var allMovies = allMoviesnon.Distinct().ToList();
-            Console.WriteLine(allMovies.Count);
-            
-            return allMovies;
-        }*/
+       
 
         public List<Reviewer> GetAllReviewers()
         {
@@ -76,14 +38,10 @@ namespace SDM_Project.Core.ApplicationService.Impl
                     allReviewers[id].ReviewersReviews.Add(r);
                 }
             }
-
             return allReviewers.Values.ToList();
         }
 
         
-
-
-
 
         public int GetNumberOfReviewsFromReviewer(int reviewer)
         {
@@ -199,7 +157,7 @@ namespace SDM_Project.Core.ApplicationService.Impl
             List<Review> reviews = _repo.GetAllReviews().ToList();
             if(rate < 1 || rate > 5)
             {
-                throw new ArgumentException("Rating needs to be a numbur between 1-5");
+                throw new ArgumentException("Rating needs to be a number between 1-5");
             }
             foreach (Review r in reviews)
             {
@@ -239,31 +197,27 @@ namespace SDM_Project.Core.ApplicationService.Impl
         {          
             List<Review> allReviews = _repo.GetAllReviews().ToList();
             var allReviewers = GetAllReviewers().ToList();
-
             int topCount = 0;
             var topList = new List<int>();
             foreach (var Rev in allReviewers)
             {
-               var revCount = Rev.ReviewersReviews.Count();
-
+                var revCount = Rev.ReviewersReviews.Count();
                 if (revCount > topCount)
                 {
                     topList.Clear();
                     topList.Add(Rev.ReviewerId);
                     topCount = revCount;
-
                 }
                 if (revCount == topCount)
                 {
                     topList.Add(Rev.ReviewerId);
                     topCount = revCount;
                 }
-
             }
             var returnList = topList.Distinct().ToList();
             if (returnList.Count == 0)
             {
-                throw new ArgumentException("There is no review to be found");
+                throw new ArgumentException("There are no reviews to be found");
             }
             return returnList; 
         }
@@ -272,31 +226,13 @@ namespace SDM_Project.Core.ApplicationService.Impl
 
         public List<int> GetTopRatedMovies(int amount)
         {
-
-            List<Movies> allMovies =_repo.getAllMovies().ToList();
-            
-            List<Movies> sortedMovies = allMovies
+            List<Movie> allMovies =_repo.getAllMovies().ToList();
+            List<Movie> sortedMovies = allMovies
               .OrderByDescending(AvgRating => AvgRating.AvgRating)
               .ToList();
-
-            /*List<Movies> deList = new List<Movies>();
-            List<int> deListId = new List<int>();
-            foreach (var movie in sortedMovies)
-            {
-                if (deListId.Contains(movie.MovieId))
-                {
-
-                }
-                else
-                {
-                    deList.Add(movie);
-                    deListId.Add(movie.MovieId);
-                }
-            }*/
-
             if (sortedMovies.Count == 0)
             {
-                throw new ArgumentException("there is no reviews to be found");
+                throw new ArgumentException("There are no reviews to be found");
             }
             if (amount > sortedMovies.Count)
             {
@@ -307,14 +243,12 @@ namespace SDM_Project.Core.ApplicationService.Impl
             {
                 amount = sortedMovies.Count;
             }
-
             for (int i = 0; i < amount; i++)
             {
                 int mid = sortedMovies[i].MovieId;
                 limitedTopMovies.Add(mid);
             }
             List<int> dlimitedTopMovies = limitedTopMovies.Distinct().ToList();
-
             return dlimitedTopMovies;
         }
 
@@ -336,11 +270,10 @@ namespace SDM_Project.Core.ApplicationService.Impl
             }
             if (returnList.Count == 0)
             {
-                throw new ArgumentException("there are no movies to be found");
+                throw new ArgumentException("There are no movies to be found");
             }
             return returnList;
         }
-
 
 
 

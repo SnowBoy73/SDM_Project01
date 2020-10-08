@@ -63,51 +63,42 @@ namespace SDM_Project.UnitTests
                                                 Reviewer = 4 },
         };
 
-        Movies[] returnValueM1 = {new Movies   { MovieId = 1,
-                                                AvgRating = 1.85,
-                                                },
-
-                                new Movies   { MovieId = 2,
-                                                AvgRating = 2.57,
-                                                },
-
-                                new Movies   { MovieId = 3,
-                                                AvgRating = 4.5,
-                                                },
-
-                                new Movies   { MovieId = 4,
-                                                AvgRating = 3.52,
-                                                },
-
-                                new Movies   { MovieId = 5,
-                                                AvgRating = 1.69,
-                                                },
-
-                                new Movies   { MovieId = 6,
-                                                AvgRating = 4.21,
-                                                },
-
-                                new Movies   { MovieId = 7,
-                                                AvgRating = 4.20,
-                                                },
-
-                                new Movies   { MovieId = 8,
-                                                AvgRating = 1.13,
-                                                },
-
-                                new Movies   { MovieId = 9,
-                                                AvgRating = 3.58,
-                                                },
-
-                                new Movies   { MovieId = 10,
-                                                AvgRating = 3.69,
-                                                },
-
-        };
 
         Review[] returnValue2 = { };
 
 
+        Movie[] returnValueM1 = {new Movie{ MovieId = 1,
+                                              AvgRating = 1.85 },
+
+                                new Movie  {  MovieId = 2,
+                                               AvgRating = 2.57 },
+
+                                new Movie  {  MovieId = 3,
+                                               AvgRating = 4.5 },
+
+                                new Movie  {  MovieId = 4,
+                                               AvgRating = 3.52 },
+
+                                new Movie  {  MovieId = 5,
+                                               AvgRating = 1.69 },
+
+                                new Movie  {  MovieId = 6,
+                                               AvgRating = 4.21 },
+
+                                new Movie  {  MovieId = 7,
+                                               AvgRating = 4.20 },
+
+                                new Movie  {  MovieId = 8,
+                                               AvgRating = 1.13 },
+
+                                new Movie  {  MovieId = 9,
+                                               AvgRating = 3.58 },
+
+                                new Movie   { MovieId = 10,
+                                               AvgRating = 3.69 },
+        };
+
+       
 
 
         [TestInitialize]
@@ -346,9 +337,9 @@ namespace SDM_Project.UnitTests
         [TestMethod]
         public void GetTopRatedMovies()
         {
-            // Setup the mock
+            // Setup the mock using the list of Movies
             Mock<IReviewRepository> mock = new Mock<IReviewRepository>();
-            mock.Setup(mock => mock.getAllMovies()).Returns(() => returnValueM1); ;
+            mock.Setup(mock => mock.getAllMovies()).Returns(() => returnValueM1);
             ReviewService service = new ReviewService(mock.Object);
             //  Test top movies 1
             List<int> actualResult = service.GetTopRatedMovies(1);

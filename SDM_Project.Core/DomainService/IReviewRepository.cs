@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SDM_Project.Core.Entity;
 
 namespace SDM_Project.Core.DomainService
@@ -8,7 +7,7 @@ namespace SDM_Project.Core.DomainService
     {
         IEnumerable<Review> GetAllReviews();
 
-        IEnumerable<Movies> getAllMovies();
+        IEnumerable<Movie> getAllMovies();
     }
 
 }
