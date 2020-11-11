@@ -19,7 +19,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             _repo = repo;
         }
 
-       // this is a test
+       // this is another test
 
 
         public int GetNumberOfReviewsFromReviewer(int reviewer)
