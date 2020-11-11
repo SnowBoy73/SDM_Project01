@@ -17,7 +17,7 @@ namespace SDM_Project1.Core
         public void ConfigureServices(IServiceCollection services)
         {
         }
-
+blah blah
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
