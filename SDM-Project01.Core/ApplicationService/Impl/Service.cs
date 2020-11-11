@@ -19,9 +19,7 @@ namespace SDM_Project01.Core.ApplicationService.Impl
             _repo = repo;
         }
 
-       // this is another test
-
-
+    
         public int GetNumberOfReviewsFromReviewer(int reviewer)
         {
             List<Review> result = new List<Review>();
